@@ -7,11 +7,11 @@ import com.eventchat.util.Constant;
 
 public class User implements IParameterize {
 
-    private String mId;
-    private String mName;
-    private String mEmail;
-    private String mInfo;
-    private String mAvatarUrl;
+    private String mId = null;
+    private String mName = null;
+    private String mEmail = null;
+    private String mInfo = null;
+    private String mAvatarUrl = null;
 
     public String getId() {
         return mId;

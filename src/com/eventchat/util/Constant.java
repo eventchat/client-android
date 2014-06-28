@@ -17,6 +17,7 @@ public interface Constant {
         String BODY = "body";
         String CREATED_AT = "created_at";
         String AUTHOR = "author";
+        String PASSWORD = "password";
 
         // API protocol
         // Host
@@ -63,6 +64,11 @@ public interface Constant {
         String IS_READ = "is_read";
     }
 
+    // Key for session
+    public interface Session {
+        String LOGGED_IN = "logged_in";
+    }
+
     // User API
     public interface UserApi {
         String GET_USER = "/users/%s";
@@ -103,4 +109,10 @@ public interface Constant {
         String READ_NOTIFICATION = "/notifications";
     }
 
+    // Session API
+    public interface SessionApi {
+        String LOGIN = "/session";
+        String LOGOUT = "/session";
+        String LOGINT_STATUS = "/session";
+    }
 }

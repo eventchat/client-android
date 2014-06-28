@@ -5,11 +5,11 @@ import org.apache.http.params.HttpParams;
 
 public class Notification implements IParameterize {
 
-    private String mId;
-    private String mType;
-    private String mBody;
-    private boolean mIsRead;
-    private String mCreatedAt;
+    private String mId = null;
+    private String mType = null;
+    private String mBody = null;
+    private boolean mIsRead = false;
+    private String mCreatedAt = null;
 
     public String getId() {
         return mId;

@@ -9,13 +9,13 @@ import com.eventchat.util.Constant;
 
 public class Post implements IParameterize {
 
-    private String mId;
-    private String mTitle;
-    private String mType;
-    private String mBody;
-    private String mCreatedAt;
-    private User mAuthor;
-    private List<Comment> mComments;
+    private String mId = null;
+    private String mTitle = null;
+    private String mType = null;
+    private String mBody = null;
+    private String mCreatedAt = null;
+    private User mAuthor = null;
+    private List<Comment> mComments = null;
 
     public String getId() {
         return mId;

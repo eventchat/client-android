@@ -8,6 +8,7 @@ import org.apache.http.impl.DefaultHttpRequestFactory;
 import com.eventchat.entity.Comment;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.Post;
+import com.eventchat.entity.Session;
 import com.eventchat.entity.User;
 
 public final class RequestBuilder {
@@ -213,9 +214,60 @@ public final class RequestBuilder {
         return request;
     }
 
+    public static HttpRequest buildLoginRequest(Session session) {
+        String url = buildUrl(Constant.SessionApi.LOGIN);
+        if (url != null) {
+            HttpRequest request = null;
+            try {
+                request = sFactory.newHttpRequest(Constant.Http.HTTP_POST, url);
+                request.setParams(session.toParams());
+            } catch (MethodNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return request;
+        }
+        return null;
+    }
+
+    public static HttpRequest buildLogoutRequest() {
+        String url = buildUrl(Constant.SessionApi.LOGOUT);
+        if (url != null) {
+            HttpRequest request = null;
+            try {
+                request = sFactory.newHttpRequest(Constant.Http.HTTP_DELETE,
+                        url);
+            } catch (MethodNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return request;
+        }
+        return null;
+    }
+
+    public static HttpRequest buildCheckLoginRequest() {
+        String url = buildUrl(Constant.SessionApi.LOGINT_STATUS);
+        if (url != null) {
+            HttpRequest request = null;
+            try {
+                request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+            } catch (MethodNotSupportedException e) {
+                e.printStackTrace();
+            }
+            return request;
+        }
+        return null;
+    }
+
     private static String buildUrl(String format, String param) {
         if (format != null) {
             return Constant.Common.HOST + String.format(format, param);
+        }
+        return null;
+    }
+
+    private static String buildUrl(String url) {
+        if (url != null) {
+            return Constant.Common.HOST + url;
         }
         return null;
     }

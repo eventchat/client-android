@@ -11,5 +11,8 @@
     <string name="my_post">My Post</string>
     <string name="comments">Comments</string>
     <string name="like">Like</string>
+    <string name="user_name_hint">Please enter user name</string>
+    <string name="password_hint">Please enter password</string>
+    <string name="login">Login</string>
 
 </resources>

@@ -5,13 +5,13 @@ import org.apache.http.params.HttpParams;
 
 public class Event implements IParameterize {
 
-    private String mId;
-    private String mName;
-    private double mLongitude;
-    private double mLatitude;
-    private String mStartTime;
-    private String mEndTime;
-    private String mDesc;
+    private String mId = null;
+    private String mName = null;
+    private double mLongitude = 0.0;
+    private double mLatitude = 0.0;
+    private String mStartTime = null;
+    private String mEndTime = null;
+    private String mDesc = null;
 
     public String getId() {
         return mId;

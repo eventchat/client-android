@@ -5,10 +5,10 @@ import org.apache.http.params.HttpParams;
 
 public class Comment implements IParameterize {
 
-    private String mId;
-    private User mAuthor;
-    private String mBody;
-    private String mCreatedAt;
+    private String mId = null;
+    private User mAuthor = null;
+    private String mBody = null;
+    private String mCreatedAt = null;
 
     public String getId() {
         return mId;

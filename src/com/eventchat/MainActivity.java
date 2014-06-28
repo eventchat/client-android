@@ -1,5 +1,7 @@
 package com.eventchat;
 
+import com.eventchat.util.DebugLog;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -18,13 +20,13 @@ import android.widget.TabHost.TabSpec;
 
 public class MainActivity extends Activity implements OnTabChangeListener {
 
-    private static String TAG = MainActivity.class.getSimpleName();
+    private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static String TAB_FEED = "feed";
+    private static final String TAB_FEED = "feed";
 
-    private static String TAB_CHAT = "chat";
+    private static final String TAB_CHAT = "chat";
 
-    private static String TAB_PROFILE = "profile";
+    private static final String TAB_PROFILE = "profile";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,8 +46,9 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        DebugLog.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity);
         mTabHost = (TabHost) findViewById(R.id.tab_host);
         setupTabs();
 

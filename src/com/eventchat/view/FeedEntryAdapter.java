@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eventchat.R;
 import com.eventchat.entity.Post;
+import com.eventchat.util.DebugLog;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,11 +14,14 @@ import android.widget.BaseAdapter;
 
 public class FeedEntryAdapter extends BaseAdapter {
 
+    private static final String TAG = FeedEntryAdapter.class.getSimpleName();
+
     private Context mContext = null;
 
     private List<Post> mPostList = null;
 
     public FeedEntryAdapter(Context context, List<Post> postList) {
+        DebugLog.d(TAG, "FeedEntryAdapter");
         mContext = context;
         mPostList = postList;
     }
@@ -47,5 +51,4 @@ public class FeedEntryAdapter extends BaseAdapter {
         }
         return convertView;
     }
-
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.eventchat.R;
 import com.eventchat.entity.Chat;
+import com.eventchat.util.DebugLog;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,11 +14,14 @@ import android.widget.BaseAdapter;
 
 public class ChatEntryAdapter extends BaseAdapter {
 
+    private static final String TAG = ChatEntryAdapter.class.getSimpleName();
+
     private Context mContext = null;
 
     private List<Chat> mChatList = null;
 
     public ChatEntryAdapter(Context context, List<Chat> chatList) {
+        DebugLog.d(TAG, "ChatEntryAdapter");
         mContext = context;
         mChatList = chatList;
     }
