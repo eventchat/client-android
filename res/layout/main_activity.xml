@@ -33,6 +33,16 @@
                 android:layout_height="match_parent" />
 
             <FrameLayout
+                android:id="@+id/tab_create"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
+                android:id="@+id/tab_notification"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <FrameLayout
                 android:id="@+id/tab_profile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

@@ -1,14 +1,14 @@
 package com.eventchat;
 
-import com.eventchat.manager.RequestManager;
-import com.eventchat.util.DebugLog;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.eventchat.manager.ProfileManager;
+import com.eventchat.util.DebugLog;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
@@ -35,6 +35,21 @@ public class LoginActivity extends Activity implements OnClickListener {
     public void onClick(View v) {
         String userName = mUserNameText.getText().toString();
         String password = mPasswordText.getText().toString();
-        RequestManager.getInstance().login(userName, password);
+        ProfileManager.getInstance(this).login(userName, password);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

@@ -53,7 +53,7 @@ final class RequestBuilder {
     }
 
     public static HttpRequest buildGetPostRequest(String id) {
-        String url = buildUrl(Constant.PostApi.GET_POST_BY_USER_ID, id);
+        String url = buildUrl(Constant.PostApi.GET_POST, id);
         if (url != null) {
             try {
                 return sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
@@ -180,7 +180,7 @@ final class RequestBuilder {
         return null;
     }
 
-    public static HttpRequest buildCreateUpdateEventRequest(String name,
+    public static HttpRequest buildUpdateEventRequest(String name,
             double longitude, double latitude, String startTime,
             String endTime, String desc) {
         if (name != null) {

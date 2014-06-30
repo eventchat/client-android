@@ -1,6 +1,12 @@
 package com.eventchat;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.eventchat.entity.Post;
+import com.eventchat.manager.FeedManager;
 import com.eventchat.util.DebugLog;
+import com.eventchat.view.FeedEntryAdapter;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -27,6 +34,10 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     private static final String TAB_CHAT = "chat";
 
     private static final String TAB_PROFILE = "profile";
+
+    private static final String TAB_CREATE = "create";
+
+    private static final String TAB_NOTIFICATION = "notification";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -71,9 +82,16 @@ public class MainActivity extends Activity implements OnTabChangeListener {
                 .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                     @Override
                     public void onPageSelected(int position) {
+                        DebugLog.d(TAG, "onPageSelected position = " + position);
+                        FeedManager.getInstance(MainActivity.this).updateView(
+                                position);
                         mTabHost.setCurrentTab(position);
                     }
                 });
+
+        FeedManager.getInstance(MainActivity.this).updateView(0);
+        FeedManager.getInstance(MainActivity.this).getPost(
+                "53b0df57a5e69302004d0898");
     }
 
     @Override
@@ -187,6 +205,10 @@ public class MainActivity extends Activity implements OnTabChangeListener {
             mTabHost.setup();
             mTabHost.addTab(newTab(TAB_FEED, R.string.feed, R.id.tab_feed));
             mTabHost.addTab(newTab(TAB_CHAT, R.string.chat, R.id.tab_chat));
+            // mTabHost.addTab(newTab(TAB_CREATE, R.string.create,
+            // R.id.tab_create));
+            // mTabHost.addTab(newTab(TAB_NOTIFICATION, R.string.notification,
+            // R.id.tab_notification));
             mTabHost.addTab(newTab(TAB_PROFILE, R.string.profile,
                     R.id.tab_profile));
             mTabHost.setOnTabChangedListener(this);
