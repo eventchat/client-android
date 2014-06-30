@@ -1,9 +1,6 @@
 package com.eventchat.entity;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-public class Session implements IParameterize {
+public class Session {
 
     private String mUserName = null;
     private String mPassword = null;
@@ -31,11 +28,5 @@ public class Session implements IParameterize {
 
     public void setLoggedIn(boolean loggedIn) {
         this.mLoggedIn = loggedIn;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        return params;
     }
 }

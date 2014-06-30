@@ -34,6 +34,5 @@ public class SplashActivity extends Activity {
             SplashActivity.this.startActivity(intent);
             return true;
         }
-
     }
 }

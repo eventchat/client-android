@@ -1,11 +1,6 @@
 package com.eventchat.entity;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-import com.eventchat.util.Constant;
-
-public class User implements IParameterize {
+public class User {
 
     private String mId = null;
     private String mName = null;
@@ -51,16 +46,5 @@ public class User implements IParameterize {
 
     public void setAvatarUrl(String avatarUrl) {
         this.mAvatarUrl = avatarUrl;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        params.setParameter(Constant.Common.ID, mId);
-        params.setParameter(Constant.Common.NAME, mName);
-        params.setParameter(Constant.User.EMAIL, mEmail);
-        params.setParameter(Constant.User.INFO, mInfo);
-        params.setParameter(Constant.User.AVATAR_URL, mAvatarUrl);
-        return params;
     }
 }

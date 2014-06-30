@@ -22,7 +22,7 @@ public interface Constant {
         // API protocol
         // Host
         String HOST = "http://eventchat.herokuapp.com";
-        String PORT = "";
+        int PORT = 80;
     }
 
     // Key for user

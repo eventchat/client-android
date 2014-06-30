@@ -1,9 +1,6 @@
 package com.eventchat.entity;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-public class Notification implements IParameterize {
+public class Notification {
 
     private String mId = null;
     private String mType = null;
@@ -49,11 +46,5 @@ public class Notification implements IParameterize {
 
     public void setCreatedAt(String createdAt) {
         this.mCreatedAt = createdAt;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        return params;
     }
 }

@@ -1,9 +1,6 @@
 package com.eventchat.entity;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-public class Event implements IParameterize {
+public class Event {
 
     private String mId = null;
     private String mName = null;
@@ -67,11 +64,5 @@ public class Event implements IParameterize {
 
     public void setDesc(String desc) {
         this.mDesc = desc;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        return params;
     }
 }

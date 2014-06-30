@@ -1,9 +1,6 @@
 package com.eventchat.entity;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-public class Message implements IParameterize {
+public class Message {
 
     private String mId;
     private User mAuthor;
@@ -40,11 +37,5 @@ public class Message implements IParameterize {
 
     public void setCreatedAt(String createdAt) {
         this.mCreatedAt = createdAt;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        return params;
     }
 }

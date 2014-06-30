@@ -2,12 +2,7 @@ package com.eventchat.entity;
 
 import java.util.List;
 
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
-
-import com.eventchat.util.Constant;
-
-public class Post implements IParameterize {
+public class Post {
 
     private String mId = null;
     private String mTitle = null;
@@ -71,16 +66,5 @@ public class Post implements IParameterize {
 
     public void setComments(List<Comment> comments) {
         this.mComments = comments;
-    }
-
-    @Override
-    public HttpParams toParams() {
-        HttpParams params = new BasicHttpParams();
-        params.setParameter(Constant.Common.ID, mId);
-        params.setParameter(Constant.Post.TITLE, mTitle);
-        params.setParameter(Constant.Post.TYPE, mType);
-        params.setParameter(Constant.Common.BODY, mBody);
-        params.setParameter(Constant.Common.CREATED_AT, mCreatedAt);
-        return params;
     }
 }
