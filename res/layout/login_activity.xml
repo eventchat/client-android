@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/user_name_hint"
         android:inputType="text"
-        android:text="xiaolei" />
+        android:text="@string/xiaolei" />
 
     <EditText
         android:id="@+id/password"
@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/password_hint"
         android:inputType="textPassword"
-        android:text="xiaolei" />
+        android:text="@string/xiaolei" />
 
     <Button
         android:id="@+id/login"

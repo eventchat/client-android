@@ -3,11 +3,6 @@ package com.eventchat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.eventchat.entity.Post;
-import com.eventchat.manager.FeedManager;
-import com.eventchat.util.DebugLog;
-import com.eventchat.view.FeedEntryAdapter;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -20,24 +15,31 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
+
+import com.eventchat.entity.EntityFactory;
+import com.eventchat.entity.Event;
+import com.eventchat.manager.PostManager;
+import com.eventchat.util.DebugLog;
+import com.eventchat.view.EventFragment;
+import com.eventchat.view.EventPatternAdapter;
 
 public class MainActivity extends Activity implements OnTabChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String TAB_FEED = "feed";
+    private static final String TAB_JOIN = "join";
+
+    private static final String TAB_EVENT = "event";
 
     private static final String TAB_CHAT = "chat";
 
-    private static final String TAB_PROFILE = "profile";
-
-    private static final String TAB_CREATE = "create";
-
-    private static final String TAB_NOTIFICATION = "notification";
+    private static final String TAB_ME = "me";
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -83,14 +85,14 @@ public class MainActivity extends Activity implements OnTabChangeListener {
                     @Override
                     public void onPageSelected(int position) {
                         DebugLog.d(TAG, "onPageSelected position = " + position);
-                        FeedManager.getInstance(MainActivity.this).updateView(
+                        PostManager.getInstance(MainActivity.this).updateView(
                                 position);
                         mTabHost.setCurrentTab(position);
                     }
                 });
 
-        FeedManager.getInstance(MainActivity.this).updateView(0);
-        FeedManager.getInstance(MainActivity.this).getPost(
+        PostManager.getInstance(MainActivity.this).updateView(0);
+        PostManager.getInstance(MainActivity.this).getPost(
                 "53b0df57a5e69302004d0898");
     }
 
@@ -132,19 +134,20 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
             case 0:
-                return getString(R.string.feed);
+                return getString(R.string.join);
             case 1:
-                return getString(R.string.chat);
+                return getString(R.string.my_events);
             case 2:
-                return getString(R.string.profile);
+                return getString(R.string.chat);
+            case 3:
+                return getString(R.string.me);
             }
             return null;
         }
@@ -176,22 +179,45 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater,
+                final ViewGroup container, Bundle savedInstanceState) {
             int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
             View rootView = null;
             switch (sectionNumber) {
             case 1:
-                rootView = inflater.inflate(R.layout.feed_fragment, container,
+                rootView = inflater.inflate(R.layout.join_fragment, container,
                         false);
+                GridView view = (GridView) rootView.findViewById(R.id.pattern);
+                List<Event> eventList = new ArrayList<Event>();
+                eventList.add(EntityFactory.createEvent("1"));
+                eventList.add(EntityFactory.createEvent("2"));
+                eventList.add(EntityFactory.createEvent("3"));
+                eventList.add(EntityFactory.createEvent("4"));
+                view.setAdapter(new EventPatternAdapter(inflater, eventList));
+                view.setOnItemClickListener(new OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view,
+                            int position, long id) {
+                        Log.d(TAG, "id = " + id);
+                        getFragmentManager()
+                                .beginTransaction()
+                                .replace(container.getId(),
+                                        new EventFragment(), "event").commit();
+                    }
+                });
                 break;
             case 2:
-                rootView = inflater.inflate(R.layout.chat_fragment, container,
+                rootView = inflater.inflate(R.layout.my_event_fragment, container,
                         false);
                 break;
             case 3:
-                rootView = inflater.inflate(R.layout.profile_fragment,
-                        container, false);
+                rootView = inflater.inflate(R.layout.chat_fragment, container,
+                        false);
+                break;
+            case 4:
+                rootView = inflater.inflate(R.layout.me_fragment, container,
+                        false);
                 break;
             default:
                 break;
@@ -203,14 +229,11 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     private void setupTabs() {
         if (mTabHost != null) {
             mTabHost.setup();
-            mTabHost.addTab(newTab(TAB_FEED, R.string.feed, R.id.tab_feed));
+            mTabHost.addTab(newTab(TAB_JOIN, R.string.join, R.id.tab_join));
+            mTabHost.addTab(newTab(TAB_EVENT, R.string.my_events,
+                    R.id.tab_event));
             mTabHost.addTab(newTab(TAB_CHAT, R.string.chat, R.id.tab_chat));
-            // mTabHost.addTab(newTab(TAB_CREATE, R.string.create,
-            // R.id.tab_create));
-            // mTabHost.addTab(newTab(TAB_NOTIFICATION, R.string.notification,
-            // R.id.tab_notification));
-            mTabHost.addTab(newTab(TAB_PROFILE, R.string.profile,
-                    R.id.tab_profile));
+            mTabHost.addTab(newTab(TAB_ME, R.string.me, R.id.tab_me));
             mTabHost.setOnTabChangedListener(this);
         }
     }

@@ -11,22 +11,22 @@ import com.eventchat.util.WebApiUtil;
 import com.eventchat.webapi.EventChatClient;
 import com.eventchat.webapi.OnReceiveCallback;
 
-public final class FeedManager implements IDispose {
+public final class PostManager implements IDispose {
 
-    private static final String TAG = FeedManager.class.getSimpleName();
+    private static final String TAG = PostManager.class.getSimpleName();
 
-    private static FeedManager sInstance = new FeedManager();
+    private static PostManager sInstance = new PostManager();
 
     private static Context sContext = null;
 
     private EventChatClient mClient = null;
 
-    private FeedManager() {
+    private PostManager() {
         DebugLog.d(TAG, "FeedManager");
         mClient = EventChatClient.getInstance();
     }
 
-    public static FeedManager getInstance(Context context) {
+    public static PostManager getInstance(Context context) {
         DebugLog.d(TAG, "getInstance");
         sContext = context;
         return sInstance;

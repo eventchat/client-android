@@ -20,51 +20,59 @@
         android:src="@drawable/ic_launcher" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/autor_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/avatar"
-        android:text="@string/post" />
+        android:text="@string/user_name_hint" />
 
     <TextView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_toRightOf="@id/avatar"
-        android:text="@string/my_post" />
-
-    <ImageView
-        android:id="@+id/image"
+        android:id="@+id/post_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/content"
+        android:layout_below="@id/autor_name"
         android:layout_toRightOf="@id/avatar"
-        android:contentDescription="@string/post"
-        android:src="@drawable/ic_launcher" />
+        android:text="@string/action_settings" />
 
     <TextView
-        android:id="@+id/location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/image"
-        android:layout_toRightOf="@id/avatar"
-        android:text="\@Location" />
-
-    <TextView
-        android:id="@+id/comments"
+        android:id="@+id/post_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location"
+        android:layout_below="@id/post_date"
         android:layout_toRightOf="@id/avatar"
-        android:text="@string/comments" />
+        android:text="@string/join_hint" />
+
+    <TextView
+        android:id="@+id/post_comment_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="@string/_6" />
+
+    <TextView
+        android:id="@+id/post_like_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/post_comment_num"
+        android:drawableTop="@drawable/ic_launcher"
+        android:text="@string/_6" />
 
     <TextView
         android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/location"
-        android:layout_toRightOf="@id/comments"
+        android:layout_below="@id/post_content"
+        android:drawableLeft="@drawable/ic_launcher"
         android:text="@string/like" />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/post_content"
+        android:layout_toRightOf="@id/like"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:text="@string/comment" />
 
 </RelativeLayout>

@@ -6,6 +6,12 @@ public final class EntityFactory {
 
     }
 
+    public static Event createEvent(String name) {
+        Event event = new Event();
+        event.setName(name);
+        return event;
+    }
+
     public static Session createSession(String name, String password) {
         Session session = new Session();
         session.setUserName(name);

@@ -47,7 +47,7 @@ public class FeedEntryAdapter extends BaseAdapter {
             // TODO
         } else {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.feed_entry, parent);
+            convertView = inflater.inflate(R.layout.post_entry, parent);
         }
         return convertView;
     }
