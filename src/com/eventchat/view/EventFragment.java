@@ -1,12 +1,13 @@
 package com.eventchat.view;
 
-import com.eventchat.util.DebugLog;
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.eventchat.R;
+import com.eventchat.util.DebugLog;
 
 public class EventFragment extends Fragment {
 
@@ -20,6 +21,8 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreateView");
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = inflater.inflate(R.layout.event_fragment, container,
+                false);
+        return rootView;
     }
 }

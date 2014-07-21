@@ -28,5 +28,8 @@
     <string name="attended">Attended</string>
     <string name="organized">Organized</string>
     <string name="_6">6</string>
+    <string name="location">Location:</string>
+    <string name="time">Time:</string>
+    <string name="organizer">Organizer:</string>
 
 </resources>

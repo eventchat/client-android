@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -200,16 +201,18 @@ public class MainActivity extends Activity implements OnTabChangeListener {
                     public void onItemClick(AdapterView<?> parent, View view,
                             int position, long id) {
                         Log.d(TAG, "id = " + id);
-                        getFragmentManager()
-                                .beginTransaction()
-                                .replace(container.getId(),
-                                        new EventFragment(), "event").commit();
+                        Fragment newFragment = new EventFragment();
+                        FragmentTransaction transaction = getFragmentManager()
+                                .beginTransaction();
+                        transaction.replace(container.getId(), newFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                 });
                 break;
             case 2:
-                rootView = inflater.inflate(R.layout.my_event_fragment, container,
-                        false);
+                rootView = inflater.inflate(R.layout.my_event_fragment,
+                        container, false);
                 break;
             case 3:
                 rootView = inflater.inflate(R.layout.chat_fragment, container,

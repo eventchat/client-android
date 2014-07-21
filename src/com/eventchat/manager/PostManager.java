@@ -22,7 +22,7 @@ public final class PostManager implements IDispose {
     private EventChatClient mClient = null;
 
     private PostManager() {
-        DebugLog.d(TAG, "FeedManager");
+        DebugLog.d(TAG, "PostManager");
         mClient = EventChatClient.getInstance();
     }
 
@@ -62,34 +62,6 @@ public final class PostManager implements IDispose {
     public void createComment(String postId, String body) {
         if (mClient != null) {
             mClient.createComment(postId, body, new CreateCommentCallback());
-        }
-    }
-
-    public void getEvent(String eventId) {
-        if (mClient != null) {
-            mClient.getEvent(eventId, new GetEventCallback());
-        }
-    }
-
-    public void createEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc) {
-        if (mClient != null) {
-            mClient.createEvent(name, longitude, latitude, startTime, endTime,
-                    desc, new CreateEventCallback());
-        }
-    }
-
-    public void updateEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc) {
-        if (mClient != null) {
-            mClient.updateEvent(name, longitude, latitude, startTime, endTime,
-                    desc, new UpdateEventCallback());
-        }
-    }
-
-    public void deleteEvent(String eventId) {
-        if (mClient != null) {
-            mClient.deleteEvent(eventId, new DeleteEventCallback());
         }
     }
 
@@ -141,38 +113,6 @@ public final class PostManager implements IDispose {
     }
 
     private class CreateCommentCallback implements OnReceiveCallback {
-
-        @Override
-        public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
-        }
-    }
-
-    private class GetEventCallback implements OnReceiveCallback {
-
-        @Override
-        public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
-        }
-    }
-
-    private class CreateEventCallback implements OnReceiveCallback {
-
-        @Override
-        public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
-        }
-    }
-
-    private class UpdateEventCallback implements OnReceiveCallback {
-
-        @Override
-        public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
-        }
-    }
-
-    private class DeleteEventCallback implements OnReceiveCallback {
 
         @Override
         public void onReceive(HttpResponse response) {
