@@ -21,6 +21,7 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreateView");
+        DebugLog.d(TAG, "container = " + container);
         View rootView = inflater.inflate(R.layout.event_fragment, container,
                 false);
         return rootView;

@@ -1,5 +1,7 @@
 package com.eventchat.entity;
 
+import java.util.List;
+
 public class Event {
 
     private String mId = null;
@@ -9,6 +11,15 @@ public class Event {
     private String mStartTime = null;
     private String mEndTime = null;
     private String mDesc = null;
+    private List<User> mAttendeeList = null;
+
+    public List<User> getAttendeeList() {
+        return mAttendeeList;
+    }
+
+    public void setAttendeeList(List<User> attendeeList) {
+        this.mAttendeeList = attendeeList;
+    }
 
     public String getId() {
         return mId;

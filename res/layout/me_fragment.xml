@@ -9,12 +9,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.eventchat.TabFragment" >
 
-    <ImageView
+    <com.eventchat.view.RoundedImageView
         android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/avatar"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/placeholder" />
 
     <TextView
         android:id="@+id/user_name"

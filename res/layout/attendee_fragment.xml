@@ -8,14 +8,18 @@
         android:id="@+id/chat_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/ic_launcher"
+        android:layout_gravity="center"
+        android:drawableLeft="@drawable/ico_chat_orange"
+        android:gravity="center"
         android:text="@string/chat_all" >
     </TextView>
 
     <ListView
         android:id="@+id/attendee_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center" >
     </ListView>
 
 </LinearLayout>

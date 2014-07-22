@@ -3,6 +3,7 @@ package com.eventchat.manager;
 import org.apache.http.HttpResponse;
 
 import android.content.Context;
+import android.util.LruCache;
 
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.WebApiUtil;
