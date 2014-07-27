@@ -2,11 +2,17 @@ package com.eventchat.manager;
 
 import org.apache.http.HttpResponse;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.util.LruCache;
 
+import com.eventchat.R;
+import com.eventchat.entity.Event;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.JsonParser;
 import com.eventchat.util.WebApiUtil;
+import com.eventchat.view.EventFragment;
+import com.eventchat.view.ProgressDialogView;
 import com.eventchat.webapi.EventChatClient;
 import com.eventchat.webapi.OnReceiveCallback;
 
@@ -20,9 +26,12 @@ public class EventManager implements IDispose {
 
     private EventChatClient mClient = null;
 
+    private ProgressDialogView mProgressDialog = null;
+
     private EventManager() {
         DebugLog.d(TAG, "EventManager");
         mClient = EventChatClient.getInstance();
+        mProgressDialog = new ProgressDialogView();
     }
 
     public static EventManager getInstance(Context context) {
@@ -31,17 +40,25 @@ public class EventManager implements IDispose {
         return sInstance;
     }
 
+    public void joinEvent(String eventId) {
+        if (mClient != null) {
+            mProgressDialog.show(sContext);
+            mClient.joinEvent(eventId, new JoinEventCallback());
+        }
+    }
+
     public void getEvent(String eventId) {
         if (mClient != null) {
+            mProgressDialog.show(sContext);
             mClient.getEvent(eventId, new GetEventCallback());
         }
     }
 
     public void createEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc) {
+            String address, String startTime, String endTime, String desc) {
         if (mClient != null) {
-            mClient.createEvent(name, longitude, latitude, startTime, endTime,
-                    desc, new CreateEventCallback());
+            mClient.createEvent(name, longitude, latitude, address, startTime,
+                    endTime, desc, new CreateEventCallback());
         }
     }
 
@@ -52,10 +69,10 @@ public class EventManager implements IDispose {
     }
 
     public void updateEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc) {
+            String address, String startTime, String endTime, String desc) {
         if (mClient != null) {
-            mClient.updateEvent(name, longitude, latitude, startTime, endTime,
-                    desc, new UpdateEventCallback());
+            mClient.updateEvent(name, longitude, latitude, address, startTime,
+                    endTime, desc, new UpdateEventCallback());
         }
     }
 
@@ -68,11 +85,28 @@ public class EventManager implements IDispose {
 
         @Override
         public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
+            String res = WebApiUtil.resToString(response);
+            DebugLog.d(TAG, res);
+            EventFragment fragment = new EventFragment();
+            FragmentTransaction transaction = ((Activity) sContext)
+                    .getFragmentManager().beginTransaction();
+            transaction.replace(R.id.tab_join, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+
+            mProgressDialog.dismiss();
         }
     }
 
     private class CreateEventCallback implements OnReceiveCallback {
+
+        @Override
+        public void onReceive(HttpResponse response) {
+            DebugLog.d(TAG, WebApiUtil.resToString(response));
+        }
+    }
+
+    private class JoinEventCallback implements OnReceiveCallback {
 
         @Override
         public void onReceive(HttpResponse response) {

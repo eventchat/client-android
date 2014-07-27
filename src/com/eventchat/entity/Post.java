@@ -10,7 +10,22 @@ public class Post {
     private String mBody = null;
     private String mCreatedAt = null;
     private User mAuthor = null;
-    private List<Comment> mComments = null;
+    private List<Comment> mCommentList = null;
+
+    public Post() {
+
+    }
+
+    public Post(String id, String title, String type, String body,
+            String createdAt, User author, List<Comment> commentList) {
+        mId = id;
+        mTitle = title;
+        mType = type;
+        mBody = body;
+        mCreatedAt = createdAt;
+        mAuthor = author;
+        mCommentList = commentList;
+    }
 
     public String getId() {
         return mId;
@@ -61,10 +76,10 @@ public class Post {
     }
 
     public List<Comment> getComments() {
-        return mComments;
+        return mCommentList;
     }
 
     public void setComments(List<Comment> comments) {
-        this.mComments = comments;
+        this.mCommentList = comments;
     }
 }

@@ -1,5 +1,7 @@
 package com.eventchat.entity;
 
+import java.util.List;
+
 public final class EntityFactory {
 
     private EntityFactory() {
@@ -12,19 +14,34 @@ public final class EntityFactory {
         return event;
     }
 
+    public static Event createEvent(String id, String name, double longitude,
+            double latitude, String address, String startTime, String endTime,
+            String desc, String organizer) {
+        return new Event(id, name, longitude, latitude, address, startTime,
+                endTime, desc, organizer);
+    }
+
     public static Session createSession(String name, String password) {
-        Session session = new Session();
-        session.setUserName(name);
-        session.setPassword(password);
-        return session;
+        return new Session(name, password);
     }
 
-    public static User createUser(String name, String email, String password,
-            String info) {
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        return user;
+    public static User createUser(String id, String name, String email,
+            String info, String url) {
+        return new User(id, name, email, info, url);
     }
 
+    public static Post createPost(String id, String title, String type,
+            String body, String createdAt, User author,
+            List<Comment> commentList) {
+        return new Post(id, title, type, body, createdAt, author, commentList);
+    }
+
+    public static Chat createChat(String to, String message) {
+        return new Chat(to, message);
+    }
+
+    public static Comment createComment(String id, User author, String body,
+            String createdAt) {
+        return new Comment(id, author, body, createdAt);
+    }
 }

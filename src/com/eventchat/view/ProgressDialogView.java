@@ -20,6 +20,10 @@ public final class ProgressDialogView {
         mProgressDialog = ProgressDialog.show(context, title, message);
     }
 
+    public void show(Context context) {
+        mProgressDialog = ProgressDialog.show(context, null, null);
+    }
+
     public void dismiss() {
         DebugLog.d(TAG, "dismiss");
         if (mProgressDialog != null) {

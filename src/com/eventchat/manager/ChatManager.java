@@ -20,15 +20,17 @@ public final class ChatManager implements IDispose, OnReceiveCallback {
         return sInstance;
     }
 
+    public void sendMessage(String to, String message) {
+
+    }
+
     @Override
     public void onReceive(HttpResponse response) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
-
     }
 }

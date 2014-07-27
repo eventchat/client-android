@@ -142,6 +142,30 @@ final class RequestBuilder {
         return null;
     }
 
+    public static HttpRequest buildJointEventRequest(String id) {
+        String url = buildUrl(Constant.EventApi.JOINT_EVENT, id);
+        if (url != null) {
+            try {
+                return sFactory.newHttpRequest(Constant.Http.HTTP_POST, url);
+            } catch (MethodNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static HttpRequest buildGetAttendeeList(String id) {
+        String url = buildUrl(Constant.EventApi.GET_ATTENDEE_LIST);
+        if (url != null) {
+            try {
+                return sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+            } catch (MethodNotSupportedException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     public static HttpRequest buildGetEventRequest(String id) {
         String url = buildUrl(Constant.EventApi.GET_EVENT_BY_EVENT_ID, id);
         if (url != null) {
@@ -155,8 +179,8 @@ final class RequestBuilder {
     }
 
     public static HttpRequest buildCreateEventRequest(String name,
-            double longitude, double latitude, String startTime,
-            String endTime, String desc) {
+            double longitude, double latitude, String address,
+            String startTime, String endTime, String desc) {
         if (name != null) {
             HttpPost request = new HttpPost(
                     buildUrl(Constant.EventApi.CREATE_EVENT));
@@ -166,6 +190,8 @@ final class RequestBuilder {
                     String.valueOf(longitude)));
             valuePairs.add(new BasicNameValuePair(Constant.Event.LATITUDE,
                     String.valueOf(latitude)));
+            valuePairs.add(new BasicNameValuePair(Constant.Event.ADDRESS,
+                    address));
             valuePairs.add(new BasicNameValuePair(Constant.Event.START_TIME,
                     startTime));
             valuePairs.add(new BasicNameValuePair(Constant.Event.END_TIME,
@@ -181,8 +207,8 @@ final class RequestBuilder {
     }
 
     public static HttpRequest buildUpdateEventRequest(String name,
-            double longitude, double latitude, String startTime,
-            String endTime, String desc) {
+            double longitude, double latitude, String address,
+            String startTime, String endTime, String desc) {
         if (name != null) {
             HttpPatch request = new HttpPatch(
                     buildUrl(Constant.EventApi.UPDATE_EVENT));
@@ -192,6 +218,8 @@ final class RequestBuilder {
                     String.valueOf(longitude)));
             valuePairs.add(new BasicNameValuePair(Constant.Event.LATITUDE,
                     String.valueOf(latitude)));
+            valuePairs.add(new BasicNameValuePair(Constant.Event.ADDRESS,
+                    address));
             valuePairs.add(new BasicNameValuePair(Constant.Event.START_TIME,
                     startTime));
             valuePairs.add(new BasicNameValuePair(Constant.Event.END_TIME,
@@ -300,6 +328,16 @@ final class RequestBuilder {
 
     public static HttpRequest buildCheckLoginRequest() {
         String url = buildUrl(Constant.SessionApi.LOGINT_STATUS);
+        HttpRequest request = null;
+        try {
+            request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+        } catch (MethodNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public static HttpRequest buildGetRequestWithUrl(String url) {
         HttpRequest request = null;
         try {
             request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);

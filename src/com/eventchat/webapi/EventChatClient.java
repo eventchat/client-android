@@ -62,6 +62,16 @@ public final class EventChatClient {
                 RequestBuilder.buildCheckLoginRequest()).with(callback));
     }
 
+    public void joinEvent(String eventId, OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildJointEventRequest(eventId)).with(callback));
+    }
+
+    public void getAttendeeList(String eventId, OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildGetAttendeeList(eventId)).with(callback));
+    }
+
     public void getUser(String userId, OnReceiveCallback callback) {
         sendRequest(new EventChatRequest().with(
                 RequestBuilder.buildGetUserRequest(userId)).with(callback));
@@ -111,19 +121,21 @@ public final class EventChatClient {
     }
 
     public void createEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc,
+            String address, String startTime, String endTime, String desc,
             OnReceiveCallback callback) {
         sendRequest(new EventChatRequest().with(
                 RequestBuilder.buildCreateEventRequest(name, longitude,
-                        latitude, startTime, endTime, desc)).with(callback));
+                        latitude, address, startTime, endTime, desc)).with(
+                callback));
     }
 
     public void updateEvent(String name, double longitude, double latitude,
-            String startTime, String endTime, String desc,
+            String address, String startTime, String endTime, String desc,
             OnReceiveCallback callback) {
         sendRequest(new EventChatRequest().with(
                 RequestBuilder.buildUpdateEventRequest(name, longitude,
-                        latitude, startTime, endTime, desc)).with(callback));
+                        latitude, address, startTime, endTime, desc)).with(
+                callback));
     }
 
     public void deleteEvent(String eventId, OnReceiveCallback callback) {

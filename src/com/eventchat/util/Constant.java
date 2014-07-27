@@ -51,6 +51,9 @@ public interface Constant {
         String START_TIME = "start_time";
         String END_TIME = "end_time";
         String DESCRIPTION = "description";
+        String ADDRESS = "address";
+        String ORGANIZER = "organizer";
+        String ATTENDEE = "attendees";
     }
 
     // Key for message
@@ -95,6 +98,8 @@ public interface Constant {
         String CREATE_EVENT = "/events";
         String UPDATE_EVENT = "/events";
         String DELETE_EVENT = "/events/%s";
+        String JOINT_EVENT = "/events/%s/attendees";
+        String GET_ATTENDEE_LIST = "/events/%s/attendees";
     }
 
     // Message API

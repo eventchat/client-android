@@ -1,24 +1,33 @@
 package com.eventchat.entity;
 
-import java.util.List;
-
 public class Event {
 
     private String mId = null;
     private String mName = null;
     private double mLongitude = 0.0;
     private double mLatitude = 0.0;
+    private String mAddress = null;
     private String mStartTime = null;
     private String mEndTime = null;
     private String mDesc = null;
-    private List<User> mAttendeeList = null;
+    private String mOrganizer = null;
 
-    public List<User> getAttendeeList() {
-        return mAttendeeList;
+    public Event() {
+
     }
 
-    public void setAttendeeList(List<User> attendeeList) {
-        this.mAttendeeList = attendeeList;
+    public Event(String id, String name, double longitude, double latitude,
+            String address, String startTime, String endTime, String desc,
+            String organizer) {
+        mId = id;
+        mName = name;
+        mLongitude = longitude;
+        mLatitude = latitude;
+        mAddress = address;
+        mStartTime = startTime;
+        mEndTime = endTime;
+        mDesc = desc;
+        mOrganizer = organizer;
     }
 
     public String getId() {
@@ -53,6 +62,14 @@ public class Event {
         this.mLatitude = latitude;
     }
 
+    public String getAddress() {
+        return mAddress;
+    }
+
+    public void setAddress(String address) {
+        this.mAddress = address;
+    }
+
     public String getStartTime() {
         return mStartTime;
     }
@@ -75,5 +92,13 @@ public class Event {
 
     public void setDesc(String desc) {
         this.mDesc = desc;
+    }
+
+    public String getOrganizer() {
+        return mOrganizer;
+    }
+
+    public void setOrganizer(String organizer) {
+        this.mOrganizer = organizer;
     }
 }

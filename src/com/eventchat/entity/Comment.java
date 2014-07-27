@@ -7,6 +7,17 @@ public class Comment {
     private String mBody = null;
     private String mCreatedAt = null;
 
+    public Comment() {
+
+    }
+
+    public Comment(String id, User author, String body, String createdAt) {
+        mId = id;
+        mAuthor = author;
+        mBody = body;
+        mCreatedAt = createdAt;
+    }
+
     public String getId() {
         return mId;
     }

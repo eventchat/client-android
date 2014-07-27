@@ -17,10 +17,9 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import com.eventchat.manager.PostManager;
+import com.eventchat.manager.EventManager;
 import com.eventchat.util.DebugLog;
 import com.eventchat.view.ChatTabFragment;
-import com.eventchat.view.EventFragment;
 import com.eventchat.view.JoinTabFragment;
 import com.eventchat.view.MyEventsTabFragment;
 import com.eventchat.view.ProfileTabFragment;
@@ -51,27 +50,22 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 
-        PostManager.getInstance(this).updateView(0);
-        PostManager.getInstance(this).getPost("53b0df57a5e69302004d0898");
-
+        // PostManager.getInstance(this).updateView(0);
+        // PostManager.getInstance(this).getPost("53b0df57a5e69302004d0898");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         GridView view = (GridView) findViewById(R.id.pattern);
-        DebugLog.d(TAG, view.toString());
         view.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                Fragment fragment = new EventFragment();
-                FragmentTransaction transaction = getFragmentManager()
-                        .beginTransaction();
-                transaction.replace(R.id.tab_join, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                DebugLog.d(TAG, "onItemClick");
+                EventManager.getInstance(MainActivity.this).getEvent(
+                        "53ceea5f8052690200b909ed");
             }
         });
     }
@@ -82,9 +76,16 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     }
 
     @Override
+    public void onBackPressed() {
+        // super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void onTabChanged(String tabId) {
         Log.d(TAG, "onTabChanged = " + tabId);
         mTabHost.setCurrentTabByTag(tabId);
+
     }
 
     private void setupTabs() {

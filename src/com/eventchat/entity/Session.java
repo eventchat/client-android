@@ -6,6 +6,15 @@ public class Session {
     private String mPassword = null;
     private boolean mLoggedIn = false;
 
+    public Session() {
+
+    }
+
+    public Session(String name, String password) {
+        mUserName = name;
+        mPassword = password;
+    }
+
     public String getUserName() {
         return mUserName;
     }

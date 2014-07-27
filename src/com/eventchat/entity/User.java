@@ -8,6 +8,18 @@ public class User {
     private String mInfo = null;
     private String mAvatarUrl = null;
 
+    public User() {
+
+    }
+
+    public User(String id, String name, String email, String info, String url) {
+        mId = id;
+        mName = name;
+        mEmail = email;
+        mInfo = info;
+        mAvatarUrl = url;
+    }
+
     public String getId() {
         return mId;
     }
