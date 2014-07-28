@@ -3,16 +3,25 @@ package com.eventchat.view;
 import java.util.List;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Debug;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eventchat.R;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.User;
+import com.eventchat.manager.EventManager;
+import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.JsonParser;
 
 public class EventFragment extends Fragment {
 
@@ -26,8 +35,16 @@ public class EventFragment extends Fragment {
 
     private TextView mEventOrganizer = null;
 
-    public EventFragment() {
+    private LinearLayout mEventAttendees = null;
 
+    private ProgressDialog mProgressDialog = null;
+
+    private EventHandler mHandler = null;
+
+    private static final String EVENT_ID = "53ceea5f8052690200b909ed";
+
+    public EventFragment() {
+        mHandler = new EventHandler(Looper.getMainLooper());
     }
 
     @Override
@@ -42,6 +59,15 @@ public class EventFragment extends Fragment {
         mEventTime = (TextView) rootView.findViewById(R.id.time_content);
         mEventOrganizer = (TextView) rootView
                 .findViewById(R.id.organizer_content);
+        mEventAttendees = (LinearLayout) rootView
+                .findViewById(R.id.attendee_list);
+
+        mProgressDialog = ProgressDialog.show(getActivity(), "", "");
+
+        EventManager.getInstance(getActivity()).getEvent(EVENT_ID, mHandler);
+
+        EventManager.getInstance(getActivity()).getAttendeeList(EVENT_ID,
+                mHandler);
 
         return rootView;
     }
@@ -54,6 +80,33 @@ public class EventFragment extends Fragment {
     }
 
     public void updateAttendeeList(List<User> userList) {
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        for (User user : userList) {
+            DebugLog.d(TAG, user.getName());
+            View view = inflater.inflate(R.layout.attendee, null);
+            mEventAttendees.addView(view);
+        }
+    }
 
+    private class EventHandler extends Handler {
+
+        public EventHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+            case Constant.UI.UPDATE_EVENT_INFO:
+                updateEventInfo(JsonParser.parseEvent((String) msg.obj));
+                break;
+            case Constant.UI.UPDATE_EVENT_ATTENDEE:
+                updateAttendeeList(JsonParser.parseUserList((String) msg.obj));
+                break;
+            default:
+                throw new IllegalArgumentException();
+            }
+            mProgressDialog.dismiss();
+        }
     }
 }

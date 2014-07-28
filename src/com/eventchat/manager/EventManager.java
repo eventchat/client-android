@@ -2,16 +2,13 @@ package com.eventchat.manager;
 
 import org.apache.http.HttpResponse;
 
-import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
-import com.eventchat.R;
-import com.eventchat.entity.Event;
+import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
-import com.eventchat.util.JsonParser;
 import com.eventchat.util.WebApiUtil;
-import com.eventchat.view.EventFragment;
 import com.eventchat.view.ProgressDialogView;
 import com.eventchat.webapi.EventChatClient;
 import com.eventchat.webapi.OnReceiveCallback;
@@ -47,10 +44,9 @@ public class EventManager implements IDispose {
         }
     }
 
-    public void getEvent(String eventId) {
+    public void getEvent(String eventId, Handler handler) {
         if (mClient != null) {
-            mProgressDialog.show(sContext);
-            mClient.getEvent(eventId, new GetEventCallback());
+            mClient.getEvent(eventId, new GetEventCallback(handler));
         }
     }
 
@@ -76,6 +72,13 @@ public class EventManager implements IDispose {
         }
     }
 
+    public void getAttendeeList(String eventId, Handler handler) {
+        if (mClient != null) {
+            mClient.getAttendeeList(eventId, new GetAttendeeListCallback(
+                    handler));
+        }
+    }
+
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
@@ -83,18 +86,19 @@ public class EventManager implements IDispose {
 
     private class GetEventCallback implements OnReceiveCallback {
 
+        private Handler mHandler = null;
+
+        public GetEventCallback(Handler handler) {
+            mHandler = handler;
+        }
+
         @Override
         public void onReceive(HttpResponse response) {
             String res = WebApiUtil.resToString(response);
             DebugLog.d(TAG, res);
-            EventFragment fragment = new EventFragment();
-            FragmentTransaction transaction = ((Activity) sContext)
-                    .getFragmentManager().beginTransaction();
-            transaction.replace(R.id.tab_join, fragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-
-            mProgressDialog.dismiss();
+            Message msg = mHandler.obtainMessage(Constant.UI.UPDATE_EVENT_INFO,
+                    res);
+            mHandler.sendMessage(msg);
         }
     }
 
@@ -127,6 +131,24 @@ public class EventManager implements IDispose {
         @Override
         public void onReceive(HttpResponse response) {
             DebugLog.d(TAG, WebApiUtil.resToString(response));
+        }
+    }
+
+    private class GetAttendeeListCallback implements OnReceiveCallback {
+
+        private Handler mHandler = null;
+
+        public GetAttendeeListCallback(Handler handler) {
+            mHandler = handler;
+        }
+
+        @Override
+        public void onReceive(HttpResponse response) {
+            String res = WebApiUtil.resToString(response);
+            DebugLog.d(TAG, res);
+            Message msg = mHandler.obtainMessage(
+                    Constant.UI.UPDATE_EVENT_ATTENDEE, res);
+            mHandler.sendMessage(msg);
         }
     }
 }

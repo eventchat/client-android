@@ -30,8 +30,7 @@ public final class JsonParser {
                     object.getString(Constant.Event.ADDRESS),
                     object.getString(Constant.Event.START_TIME),
                     object.getString(Constant.Event.END_TIME),
-                    object.getString(Constant.Event.DESCRIPTION),
-                    object.getString(Constant.Event.ORGANIZER));
+                    object.getString(Constant.Event.DESCRIPTION), "");
         } catch (JSONException e) {
             e.printStackTrace();
         }

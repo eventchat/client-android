@@ -4,38 +4,38 @@ public interface Constant {
 
     // Http
     public interface Http {
-        String HTTP_GET = "GET";
-        String HTTP_POST = "POST";
-        String HTTP_PATCH = "PATCH";
-        String HTTP_DELETE = "DELETE";
+        static final String HTTP_GET = "GET";
+        static final String HTTP_POST = "POST";
+        static final String HTTP_PATCH = "PATCH";
+        static final String HTTP_DELETE = "DELETE";
     }
 
     // Common key
     public interface Common {
-        String ID = "id";
-        String NAME = "name";
-        String BODY = "body";
-        String CREATED_AT = "created_at";
-        String AUTHOR = "author";
-        String PASSWORD = "password";
+        static final String ID = "id";
+        static final String NAME = "name";
+        static final String BODY = "body";
+        static final String CREATED_AT = "created_at";
+        static final String AUTHOR = "author";
+        static final String PASSWORD = "password";
 
         // API protocol
         // Host
-        String HOST = "http://eventchat.herokuapp.com";
-        int PORT = 80;
+        static final String HOST = "http://eventchat.herokuapp.com";
+        static final int PORT = 80;
     }
 
     // Key for user
     public interface User {
-        String EMAIL = "email";
-        String INFO = "info";
-        String AVATAR_URL = "avatar_url";
+        static final String EMAIL = "email";
+        static final String INFO = "info";
+        static final String AVATAR_URL = "avatar_url";
     }
 
     // Key for post
     public interface Post {
-        String TITLE = "title";
-        String TYPE = "type";
+        static final String TITLE = "title";
+        static final String TYPE = "type";
     }
 
     // Key for comment
@@ -46,14 +46,14 @@ public interface Constant {
 
     // Key for event
     public interface Event {
-        String LONGITUDE = "longitude";
-        String LATITUDE = "latitude";
-        String START_TIME = "start_time";
-        String END_TIME = "end_time";
-        String DESCRIPTION = "description";
-        String ADDRESS = "address";
-        String ORGANIZER = "organizer";
-        String ATTENDEE = "attendees";
+        static final String LONGITUDE = "longitude";
+        static final String LATITUDE = "latitude";
+        static final String START_TIME = "start_time";
+        static final String END_TIME = "end_time";
+        static final String DESCRIPTION = "description";
+        static final String ADDRESS = "address";
+        static final String ORGANIZER = "organizer";
+        static final String ATTENDEE = "attendees";
     }
 
     // Key for message
@@ -64,60 +64,66 @@ public interface Constant {
 
     // Key for notification
     public interface Notification {
-        String IS_READ = "is_read";
+        static final String IS_READ = "is_read";
     }
 
     // Key for session
     public interface Session {
-        String LOGGED_IN = "logged_in";
+        static final String LOGGED_IN = "logged_in";
     }
 
     // User API
     public interface UserApi {
-        String GET_USER = "/users/%s";
-        String CREATE_USER = "/users";
+        static final String GET_USER = "/users/%s";
+        static final String CREATE_USER = "/users";
     }
 
     // Post API
     public interface PostApi {
-        String GET_POST = "/posts/%s";
-        String CREATE_POST = "/posts";
-        String DELETE_POST_BY_POST_ID = "/posts/%s";
-        String GET_POST_BY_USER_ID = "/users/%s/posts";
-        String GET_POST_BY_SEARCH = "/posts/search?latitude=%f&longitude=%f&max_distance=%d";
+        static final String GET_POST = "/posts/%s";
+        static final String CREATE_POST = "/posts";
+        static final String DELETE_POST_BY_POST_ID = "/posts/%s";
+        static final String GET_POST_BY_USER_ID = "/users/%s/posts";
+        static final String GET_POST_BY_SEARCH = "/posts/search?latitude=%f&longitude=%f&max_distance=%d";
     }
 
     // Comment API
     public interface CommentApi {
-        String CREATE_COMMENT_TO_POST = "/posts/%s/comments";
+        static final String CREATE_COMMENT_TO_POST = "/posts/%s/comments";
     }
 
     // Event API
     public interface EventApi {
-        String GET_EVENT_BY_EVENT_ID = "/events/%s";
-        String CREATE_EVENT = "/events";
-        String UPDATE_EVENT = "/events";
-        String DELETE_EVENT = "/events/%s";
-        String JOINT_EVENT = "/events/%s/attendees";
-        String GET_ATTENDEE_LIST = "/events/%s/attendees";
+        static final String GET_EVENT_BY_EVENT_ID = "/events/%s";
+        static final String CREATE_EVENT = "/events";
+        static final String UPDATE_EVENT = "/events";
+        static final String DELETE_EVENT = "/events/%s";
+        static final String JOINT_EVENT = "/events/%s/attendees";
+        static final String GET_ATTENDEE_LIST = "/events/%s/attendees";
     }
 
     // Message API
     public interface MessageApi {
-        String GET_MESSAGE_BY_EVENT_ID = "/events/%s/messages";
+        static final String GET_MESSAGE_BY_EVENT_ID = "/events/%s/messages";
     }
 
     // Notification API
     public interface NotificationApi {
-        String GET_NOTIFICATION = "/notifications";
-        String READ_NOTIFICATION_BY_ID = "/notifications/%s";
-        String READ_NOTIFICATION = "/notifications";
+        static final String GET_NOTIFICATION = "/notifications";
+        static final String READ_NOTIFICATION_BY_ID = "/notifications/%s";
+        static final String READ_NOTIFICATION = "/notifications";
     }
 
     // Session API
     public interface SessionApi {
-        String LOGIN = "/session";
-        String LOGOUT = "/session";
-        String LOGINT_STATUS = "/session";
+        static final String LOGIN = "/session";
+        static final String LOGOUT = "/session";
+        static final String LOGINT_STATUS = "/session";
+    }
+
+    // UI
+    public interface UI {
+        static final int UPDATE_EVENT_INFO = 0;
+        static final int UPDATE_EVENT_ATTENDEE = 1;
     }
 }
