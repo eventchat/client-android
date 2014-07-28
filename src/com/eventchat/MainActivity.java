@@ -18,11 +18,11 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 import com.eventchat.util.DebugLog;
-import com.eventchat.view.ChatTabFragment;
+import com.eventchat.view.ChatFragment;
 import com.eventchat.view.EventFragment;
-import com.eventchat.view.JoinTabFragment;
-import com.eventchat.view.MyEventsTabFragment;
-import com.eventchat.view.ProfileTabFragment;
+import com.eventchat.view.JoinFragment;
+import com.eventchat.view.MyEventsFragment;
+import com.eventchat.view.ProfileFragment;
 
 public class MainActivity extends Activity implements OnTabChangeListener {
 
@@ -95,14 +95,14 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         if (mTabHost != null) {
             mTabHost.setup();
             mTabHost.addTab(newTab(TAB_JOIN, R.string.join, R.id.tab_join,
-                    R.drawable.tab_join_selector, new JoinTabFragment()));
+                    R.drawable.tab_join_selector, new JoinFragment()));
             mTabHost.addTab(newTab(TAB_EVENT, R.string.my_events,
                     R.id.tab_event, R.drawable.tab_my_events_selector,
-                    new MyEventsTabFragment()));
+                    new MyEventsFragment()));
             mTabHost.addTab(newTab(TAB_CHAT, R.string.chat, R.id.tab_chat,
-                    R.drawable.tab_chat_selector, new ChatTabFragment()));
+                    R.drawable.tab_chat_selector, new ChatFragment()));
             mTabHost.addTab(newTab(TAB_ME, R.string.me, R.id.tab_me,
-                    R.drawable.tab_me_selector, new ProfileTabFragment()));
+                    R.drawable.tab_me_selector, new ProfileFragment()));
             mTabHost.setOnTabChangedListener(this);
         }
     }

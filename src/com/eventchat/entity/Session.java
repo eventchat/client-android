@@ -1,6 +1,10 @@
 package com.eventchat.entity;
 
-public class Session {
+import java.io.Serializable;
+
+public class Session implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String mUserName = null;
     private String mPassword = null;

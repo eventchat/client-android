@@ -1,6 +1,10 @@
 package com.eventchat.entity;
 
-public class Notification {
+import java.io.Serializable;
+
+public class Notification implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String mId = null;
     private String mType = null;

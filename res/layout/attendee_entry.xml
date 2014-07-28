@@ -24,6 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/chat"
-        android:src="@drawable/placeholder" />
+        android:src="@drawable/ico_add_friend" />
 
 </LinearLayout>

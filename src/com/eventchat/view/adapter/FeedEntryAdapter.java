@@ -1,4 +1,4 @@
-package com.eventchat.view;
+package com.eventchat.view.adapter;
 
 import java.util.List;
 

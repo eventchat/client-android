@@ -1,4 +1,4 @@
-package com.eventchat.view;
+package com.eventchat.view.adapter;
 
 import java.util.List;
 
@@ -12,15 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-public class ChatEntryAdapter extends BaseAdapter {
+public class ChatListAdapter extends BaseAdapter {
 
-    private static final String TAG = ChatEntryAdapter.class.getSimpleName();
+    private static final String TAG = ChatListAdapter.class.getSimpleName();
 
     private Context mContext = null;
 
     private List<Chat> mChatList = null;
 
-    public ChatEntryAdapter(Context context, List<Chat> chatList) {
+    public ChatListAdapter(Context context, List<Chat> chatList) {
         DebugLog.d(TAG, "ChatEntryAdapter");
         mContext = context;
         mChatList = chatList;

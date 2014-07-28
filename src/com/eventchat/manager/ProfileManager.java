@@ -8,7 +8,9 @@ import android.content.Intent;
 
 import com.eventchat.LoginActivity;
 import com.eventchat.MainActivity;
+import com.eventchat.entity.User;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.JsonParser;
 import com.eventchat.util.WebApiUtil;
 import com.eventchat.view.ProgressDialogView;
 import com.eventchat.webapi.EventChatClient;
@@ -25,6 +27,8 @@ public final class ProfileManager implements IDispose {
     private EventChatClient mClient = null;
 
     private ProgressDialogView mProgressDialog = null;
+
+    private User mCurrentUser = null;
 
     private ProfileManager() {
         DebugLog.d(TAG, "ProfileManager");
@@ -77,6 +81,21 @@ public final class ProfileManager implements IDispose {
         }
     }
 
+    public void setCurrentUser(User user) {
+        mCurrentUser = user;
+    }
+
+    public User getCurrentUser() {
+        return mCurrentUser;
+    }
+
+    public boolean isMyself(User user) {
+        if (user != null && mCurrentUser != null) {
+            return user.getId() == mCurrentUser.getId();
+        }
+        return false;
+    }
+
     @Override
     public void dispose() {
 
@@ -91,7 +110,9 @@ public final class ProfileManager implements IDispose {
 
         @Override
         public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
+            String res = WebApiUtil.resToString(response);
+            DebugLog.d(TAG, res);
+            setCurrentUser(JsonParser.parseUser(res));
             mProgressDialog.dismiss();
             ((LoginActivity) sContext).finish();
             startActivity(MainActivity.class);

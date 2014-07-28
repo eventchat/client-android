@@ -13,12 +13,13 @@ import android.widget.GridView;
 import com.eventchat.R;
 import com.eventchat.entity.EntityFactory;
 import com.eventchat.entity.Event;
+import com.eventchat.view.adapter.EventPatternAdapter;
 
-public class JoinTabFragment extends Fragment {
+public class JoinFragment extends Fragment {
 
-    private static final String TAG = JoinTabFragment.class.getSimpleName();
+    private static final String TAG = JoinFragment.class.getSimpleName();
 
-    public JoinTabFragment() {
+    public JoinFragment() {
 
     }
 

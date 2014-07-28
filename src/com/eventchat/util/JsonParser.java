@@ -23,15 +23,17 @@ public final class JsonParser {
         Event event = null;
         try {
             JSONObject object = new JSONObject(s);
-            event = EntityFactory.createEvent(
-                    object.getString(Constant.Common.ID),
-                    object.getString(Constant.Common.NAME),
-                    object.getDouble(Constant.Event.LONGITUDE),
-                    object.getDouble(Constant.Event.LATITUDE),
-                    object.getString(Constant.Event.ADDRESS),
-                    object.getString(Constant.Event.START_TIME),
-                    object.getString(Constant.Event.END_TIME),
-                    object.getString(Constant.Event.DESCRIPTION), "");
+            event = EntityFactory.createEvent(object
+                    .getString(Constant.Common.ID), object
+                    .getString(Constant.Common.NAME), object
+                    .getDouble(Constant.Event.LONGITUDE), object
+                    .getDouble(Constant.Event.LATITUDE), object
+                    .getString(Constant.Event.ADDRESS), object
+                    .getString(Constant.Event.START_TIME), object
+                    .getString(Constant.Event.END_TIME), object
+                    .getString(Constant.Event.DESCRIPTION),
+                    parseUser(object.getString(Constant.Event.ORGANIZER))
+                            .getName());
         } catch (JSONException e) {
             e.printStackTrace();
         }

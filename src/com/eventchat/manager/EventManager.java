@@ -6,8 +6,10 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
+import com.eventchat.entity.Event;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.JsonParser;
 import com.eventchat.util.WebApiUtil;
 import com.eventchat.view.ProgressDialogView;
 import com.eventchat.webapi.EventChatClient;
@@ -24,6 +26,8 @@ public class EventManager implements IDispose {
     private EventChatClient mClient = null;
 
     private ProgressDialogView mProgressDialog = null;
+
+    private Event mCurrentEvent = null;
 
     private EventManager() {
         DebugLog.d(TAG, "EventManager");
@@ -79,6 +83,14 @@ public class EventManager implements IDispose {
         }
     }
 
+    public void setCurrentEvent(Event event) {
+        mCurrentEvent = event;
+    }
+
+    public Event getCurrentEvent() {
+        return mCurrentEvent;
+    }
+
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
@@ -114,7 +126,9 @@ public class EventManager implements IDispose {
 
         @Override
         public void onReceive(HttpResponse response) {
-            DebugLog.d(TAG, WebApiUtil.resToString(response));
+            String res = WebApiUtil.resToString(response);
+            DebugLog.d(TAG, res);
+            setCurrentEvent(JsonParser.parseEvent(res));
         }
     }
 

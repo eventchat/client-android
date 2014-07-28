@@ -13,6 +13,7 @@
         android:layout_gravity="center"
         android:contentDescription="@string/avatar"
         android:gravity="center"
+        android:paddingLeft="10dp"
         android:src="@drawable/placeholder" />
 
 </LinearLayout>

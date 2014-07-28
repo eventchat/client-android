@@ -1,8 +1,10 @@
 package com.eventchat.view;
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,7 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -36,13 +39,13 @@ public class EventFragment extends Fragment {
 
     private TextView mEventOrganizer = null;
 
-    private LinearLayout mEventAttendees = null;
+    private GridLayout mEventAttendees = null;
 
     private ProgressDialog mProgressDialog = null;
 
     private EventHandler mHandler = null;
 
-    private static final String EVENT_ID = "53ceea5f8052690200b909ed";
+    private static final String EVENT_ID = "53d6d749da0e0f0200e69de7";
 
     public EventFragment() {
         mHandler = new EventHandler(Looper.getMainLooper());
@@ -52,7 +55,6 @@ public class EventFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreateView");
-        DebugLog.d(TAG, "container = " + container);
         View rootView = inflater.inflate(R.layout.event_fragment, container,
                 false);
         mEventName = (TextView) rootView.findViewById(R.id.event_name);
@@ -60,7 +62,7 @@ public class EventFragment extends Fragment {
         mEventTime = (TextView) rootView.findViewById(R.id.time_content);
         mEventOrganizer = (TextView) rootView
                 .findViewById(R.id.organizer_content);
-        mEventAttendees = (LinearLayout) rootView
+        mEventAttendees = (GridLayout) rootView
                 .findViewById(R.id.attendee_list);
 
         mProgressDialog = showProgressDialog("", "");
@@ -81,23 +83,55 @@ public class EventFragment extends Fragment {
         mEventOrganizer.setText(event.getOrganizer());
     }
 
-    public void updateAttendeeList(List<User> userList) {
+    public void updateAttendeeList(final List<User> userList) {
         DebugLog.d(TAG, "updateAttendeeList");
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        for (User user : userList) {
-            user.getName();
-            View view = inflater.inflate(R.layout.attendee, null);
-            view.setOnClickListener(new OnClickListener() {
+        for (int i = 0; i < userList.size(); ++i) {
+            final View view = inflater.inflate(R.layout.attendee, null);
+            final ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+            avatar.setContentDescription("" + i);
+            avatar.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    
+                    DebugLog.d(TAG, "onClick " + avatar.getContentDescription());
+                    int index = Integer.valueOf(avatar.getContentDescription()
+                            .toString());
+                    ProfileFragment fragment = new ProfileFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(ProfileFragment.USER_PROFILE,
+                            userList.get(index));
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager()
+                            .beginTransaction();
+                    transaction.replace(R.id.tab_join, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
             });
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
                     LayoutParams.WRAP_CONTENT);
             mEventAttendees.addView(view, params);
         }
+        final View view = inflater.inflate(R.layout.attendee, null);
+        final ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                LayoutParams.WRAP_CONTENT);
+        mEventAttendees.addView(view, params);
+        avatar.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                AttendeeFragment fragment = new AttendeeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(AttendeeFragment.ATTENDEE_LIST,
+                        (Serializable) userList);
+                fragment.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager()
+                        .beginTransaction().replace(R.id.tab_join, fragment);
+                transaction.commit();
+            }
+        });
     }
 
     private ProgressDialog showProgressDialog(String title, String message) {

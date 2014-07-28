@@ -8,18 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class ProfileTabFragment extends Fragment {
+public class ChatFragment extends Fragment {
 
-    private static final String TAG = ProfileTabFragment.class.getSimpleName();
+    private static final String TAG = ChatFragment.class.getSimpleName();
 
-    public ProfileTabFragment() {
+    public ChatFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.profile_fragment, container,
+        View rootView = inflater.inflate(R.layout.chat_fragment, container,
                 false);
         return rootView;
     }

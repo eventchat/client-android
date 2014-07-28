@@ -1,6 +1,10 @@
 package com.eventchat.entity;
 
-public class Chat {
+import java.io.Serializable;
+
+public class Chat implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String mTo = null;
     private String mMessage = null;

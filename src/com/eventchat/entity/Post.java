@@ -1,8 +1,11 @@
 package com.eventchat.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Post {
+public class Post implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private String mId = null;
     private String mTitle = null;
