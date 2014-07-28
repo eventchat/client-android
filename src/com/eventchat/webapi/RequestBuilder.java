@@ -155,7 +155,7 @@ final class RequestBuilder {
     }
 
     public static HttpRequest buildGetAttendeeList(String id) {
-        String url = buildUrl(Constant.EventApi.GET_ATTENDEE_LIST);
+        String url = buildUrl(Constant.EventApi.GET_ATTENDEE_LIST, id);
         if (url != null) {
             try {
                 return sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);

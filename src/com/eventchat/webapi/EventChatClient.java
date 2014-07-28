@@ -10,7 +10,10 @@ import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import android.net.http.AndroidHttpClient;
 
 import com.eventchat.util.DebugLog;
 
@@ -26,7 +29,7 @@ public final class EventChatClient {
 
     private BlockingQueue<EventChatRequest> mRequestQueue = null;
 
-    private DefaultHttpClient mHttpClient = null;
+    private HttpClient mHttpClient = null;
 
     private HttpHost mHttpHost = null;
 
@@ -36,7 +39,9 @@ public final class EventChatClient {
         DebugLog.d(TAG, "EventChatClient");
         mExecutorService = Executors.newFixedThreadPool(FIXED_SIZE);
         mRequestQueue = new LinkedBlockingQueue<EventChatRequest>();
-        mHttpClient = new DefaultHttpClient();
+        mHttpClient = AndroidHttpClient.newInstance("Android");
+
+        // do not include "http://"
         mHttpHost = new HttpHost("eventchat.herokuapp.com");
         mRequestThread = new RequestThread();
         mRequestThread.start();

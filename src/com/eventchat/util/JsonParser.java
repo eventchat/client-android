@@ -3,6 +3,7 @@ package com.eventchat.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,8 +41,13 @@ public final class JsonParser {
     public static List<User> parseUserList(String s) {
         List<User> userList = new ArrayList<User>();
         try {
-            JSONObject object = new JSONObject(s);
-
+            JSONArray objectArray = new JSONArray(s);
+            for (int i = 0; i < objectArray.length(); ++i) {
+                User user = parseUser(objectArray.getString(i));
+                if (user != null) {
+                    userList.add(user);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -5,14 +5,15 @@ import java.util.List;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.eventchat.R;
@@ -62,7 +63,7 @@ public class EventFragment extends Fragment {
         mEventAttendees = (LinearLayout) rootView
                 .findViewById(R.id.attendee_list);
 
-        mProgressDialog = ProgressDialog.show(getActivity(), "", "");
+        mProgressDialog = showProgressDialog("", "");
 
         EventManager.getInstance(getActivity()).getEvent(EVENT_ID, mHandler);
 
@@ -73,6 +74,7 @@ public class EventFragment extends Fragment {
     }
 
     public void updateEventInfo(Event event) {
+        DebugLog.d(TAG, "updateEventInfo");
         mEventName.setText(event.getName());
         mEventAddress.setText(event.getAddress());
         mEventTime.setText(event.getStartTime());
@@ -80,11 +82,31 @@ public class EventFragment extends Fragment {
     }
 
     public void updateAttendeeList(List<User> userList) {
+        DebugLog.d(TAG, "updateAttendeeList");
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (User user : userList) {
-            DebugLog.d(TAG, user.getName());
+            user.getName();
             View view = inflater.inflate(R.layout.attendee, null);
-            mEventAttendees.addView(view);
+            view.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    
+                }
+            });
+            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                    LayoutParams.WRAP_CONTENT);
+            mEventAttendees.addView(view, params);
+        }
+    }
+
+    private ProgressDialog showProgressDialog(String title, String message) {
+        return ProgressDialog.show(getActivity(), "", "");
+    }
+
+    private void hideProgressDialog(ProgressDialog dialog) {
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
         }
     }
 
@@ -106,7 +128,7 @@ public class EventFragment extends Fragment {
             default:
                 throw new IllegalArgumentException();
             }
-            mProgressDialog.dismiss();
+            hideProgressDialog(mProgressDialog);
         }
     }
 }
