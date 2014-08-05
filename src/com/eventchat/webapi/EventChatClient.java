@@ -6,12 +6,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.net.http.AndroidHttpClient;
 
@@ -29,7 +28,7 @@ public final class EventChatClient {
 
     private BlockingQueue<EventChatRequest> mRequestQueue = null;
 
-    private HttpClient mHttpClient = null;
+    private AndroidHttpClient mHttpClient = null;
 
     private HttpHost mHttpHost = null;
 
@@ -170,6 +169,18 @@ public final class EventChatClient {
                 RequestBuilder.buildReadNotificationRequest()).with(callback));
     }
 
+    public void sendChatMessage(String to, String message,
+            OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildSendChatMessageRequest(to, message)).with(
+                callback));
+    }
+
+    public void getChatMessage(OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildGetChatMessageRequest()).with(callback));
+    }
+
     public void destory() {
         mRequestThread.stopThread();
     }
@@ -180,6 +191,8 @@ public final class EventChatClient {
         }
     }
 
+    private String cookie = null;
+
     private void send(final EventChatRequest request) {
         DebugLog.d(TAG, "send");
         if (request != null) {
@@ -189,9 +202,22 @@ public final class EventChatClient {
                 public void run() {
                     try {
                         HttpRequest req = request.getHttpRequest();
+                        Header[] headers = req.getAllHeaders();
+                        DebugLog.d(TAG, "" + cookie);
+                        req.setHeader("Cookie", cookie);
                         if (req != null) {
                             HttpResponse response = mHttpClient.execute(
                                     mHttpHost, req);
+                            headers = response.getAllHeaders();
+                            DebugLog.d(TAG, "=========================");
+                            for (Header header : headers) {
+                                DebugLog.d(TAG, header.getName() + " : "
+                                        + header.getValue());
+                                if (header.getName().equals("Set-Cookie")) {
+                                    cookie = header.getValue();
+                                }
+                            }
+                            DebugLog.d(TAG, "=========================");
                             OnReceiveCallback callback = request.getCallback();
                             if (callback != null) {
                                 callback.onReceive(response);

@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.eventchat.manager.ProfileManager;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.WebApiUtil;
 
 public class LoginActivity extends Activity implements OnClickListener {
 
@@ -24,11 +26,18 @@ public class LoginActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        mLoginButton = (Button) findViewById(R.id.login);
-        mLoginButton.setOnClickListener(this);
-        mUserNameText = (EditText) findViewById(R.id.user_name);
-        mPasswordText = (EditText) findViewById(R.id.password);
+
+        if (WebApiUtil.isInternetConnected(this)) {
+            setContentView(R.layout.login_activity);
+            mLoginButton = (Button) findViewById(R.id.login);
+            mLoginButton.setOnClickListener(this);
+            mUserNameText = (EditText) findViewById(R.id.user_name);
+            mPasswordText = (EditText) findViewById(R.id.password);
+        } else {
+            Toast.makeText(this, "cannot connect to the Internet",
+                    Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     @Override

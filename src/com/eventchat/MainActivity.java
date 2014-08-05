@@ -17,6 +17,8 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+import com.eventchat.manager.ChatManager;
+import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.view.ChatFragment;
 import com.eventchat.view.EventFragment;
@@ -27,14 +29,6 @@ import com.eventchat.view.ProfileFragment;
 public class MainActivity extends Activity implements OnTabChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    private static final String TAB_JOIN = "join";
-
-    private static final String TAB_EVENT = "event";
-
-    private static final String TAB_CHAT = "chat";
-
-    private static final String TAB_ME = "me";
 
     private TabHost mTabHost = null;
 
@@ -81,28 +75,36 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     @Override
     public void onBackPressed() {
         // super.onBackPressed();
+        ChatManager.getInstance().dispose();
         finish();
     }
 
     @Override
     public void onTabChanged(String tabId) {
         Log.d(TAG, "onTabChanged = " + tabId);
-        mTabHost.setCurrentTabByTag(tabId);
+        // mTabHost.setCurrentTabByTag(tabId);
+        
+    }
 
+    public void setCurrentTab(String tag) {
+        mTabHost.setCurrentTabByTag(tag);
     }
 
     private void setupTabs() {
         if (mTabHost != null) {
             mTabHost.setup();
-            mTabHost.addTab(newTab(TAB_JOIN, R.string.join, R.id.tab_join,
-                    R.drawable.tab_join_selector, new JoinFragment()));
-            mTabHost.addTab(newTab(TAB_EVENT, R.string.my_events,
+            mTabHost.addTab(newTab(Constant.Tag.TAB_JOIN, R.string.join,
+                    R.id.tab_join, R.drawable.tab_join_selector,
+                    new JoinFragment()));
+            mTabHost.addTab(newTab(Constant.Tag.TAB_EVENT, R.string.my_events,
                     R.id.tab_event, R.drawable.tab_my_events_selector,
                     new MyEventsFragment()));
-            mTabHost.addTab(newTab(TAB_CHAT, R.string.chat, R.id.tab_chat,
-                    R.drawable.tab_chat_selector, new ChatFragment()));
-            mTabHost.addTab(newTab(TAB_ME, R.string.me, R.id.tab_me,
-                    R.drawable.tab_me_selector, new ProfileFragment()));
+            mTabHost.addTab(newTab(Constant.Tag.TAB_CHAT, R.string.chat,
+                    R.id.tab_chat, R.drawable.tab_chat_selector,
+                    new ChatFragment()));
+            mTabHost.addTab(newTab(Constant.Tag.TAB_ME, R.string.me,
+                    R.id.tab_me, R.drawable.tab_me_selector,
+                    new ProfileFragment()));
             mTabHost.setOnTabChangedListener(this);
         }
     }

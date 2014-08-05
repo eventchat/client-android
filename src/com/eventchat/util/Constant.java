@@ -2,6 +2,14 @@ package com.eventchat.util;
 
 public interface Constant {
 
+    // Tab tag
+    public interface Tag {
+        static final String TAB_JOIN = "join";
+        static final String TAB_EVENT = "event";
+        static final String TAB_CHAT = "chat";
+        static final String TAB_ME = "me";
+    }
+
     // Http
     public interface Http {
         static final String HTTP_GET = "GET";
@@ -72,6 +80,12 @@ public interface Constant {
         static final String LOGGED_IN = "logged_in";
     }
 
+    // Key for chat
+    public interface Chat {
+        static final String TO = "to";
+        static final String MESSAGE = "message";
+    }
+
     // User API
     public interface UserApi {
         static final String GET_USER = "/users/%s";
@@ -121,9 +135,15 @@ public interface Constant {
         static final String LOGINT_STATUS = "/session";
     }
 
+    public interface ChatApi {
+        static final String SEND_CHAT = "/chat";
+        static final String GET_CHAT = "/chat";
+    }
+
     // UI
     public interface UI {
         static final int UPDATE_EVENT_INFO = 0;
         static final int UPDATE_EVENT_ATTENDEE = 1;
+        static final int UPDATE_CHAT_MESSAGE = 2;
     }
 }

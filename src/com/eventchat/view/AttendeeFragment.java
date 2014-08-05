@@ -7,10 +7,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.eventchat.MainActivity;
 import com.eventchat.R;
 import com.eventchat.entity.User;
+import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.view.adapter.AttendeeListAdapter;
 
@@ -38,6 +42,16 @@ public class AttendeeFragment extends Fragment {
                 .findViewById(R.id.attendee_list);
         attendeeListView.setAdapter(new AttendeeListAdapter(getActivity(),
                 mAttendeeList));
+        attendeeListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                MainActivity activity = (MainActivity) getActivity();
+                activity.setCurrentTab(Constant.Tag.TAB_CHAT);
+                
+            }
+        });
         return rootView;
     }
 }

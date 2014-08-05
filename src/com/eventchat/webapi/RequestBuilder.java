@@ -296,6 +296,36 @@ final class RequestBuilder {
         return request;
     }
 
+    public static HttpRequest buildSendChatMessageRequest(String to,
+            String message) {
+        if (to != null && message != null) {
+            HttpPost request = new HttpPost(
+                    buildUrl(Constant.ChatApi.SEND_CHAT));
+            List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
+            valuePairs.add(new BasicNameValuePair(Constant.Chat.TO, to));
+            valuePairs.add(new BasicNameValuePair(Constant.Chat.MESSAGE,
+                    message));
+            try {
+                request.setEntity(new UrlEncodedFormEntity(valuePairs));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return request;
+        }
+        return null;
+    }
+
+    public static HttpRequest buildGetChatMessageRequest() {
+        String url = buildUrl(Constant.ChatApi.GET_CHAT);
+        HttpRequest request = null;
+        try {
+            request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+        } catch (MethodNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
     public static HttpRequest buildLoginRequest(String name, String password) {
         if (name != null && password != null) {
             String url = buildUrl(Constant.SessionApi.LOGIN);
