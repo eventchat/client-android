@@ -37,7 +37,8 @@ public class ProfileFragment extends Fragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mUser = (User) bundle.get(USER_PROFILE);
-        } else {
+        }
+        if (mUser == null) {    
             mUser = ProfileManager.getInstance(getActivity()).getCurrentUser();
         }
         mDesc.setText(mUser.getInfo());

@@ -1,7 +1,6 @@
 package com.eventchat.manager;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.CookieStore;
 
 import android.content.Context;
 import android.os.Handler;

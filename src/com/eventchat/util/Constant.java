@@ -146,4 +146,10 @@ public interface Constant {
         static final int UPDATE_EVENT_ATTENDEE = 1;
         static final int UPDATE_CHAT_MESSAGE = 2;
     }
+
+    // Data
+    public interface Data {
+        static final String SHARED_PREF_NAME = "conversation_list";
+        static final String CONVERSATION = "conversation";
+    }
 }

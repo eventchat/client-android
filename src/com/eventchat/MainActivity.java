@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.eventchat.manager.ChatManager;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
-import com.eventchat.view.ChatFragment;
+import com.eventchat.view.ConversationFragment;
 import com.eventchat.view.EventFragment;
 import com.eventchat.view.JoinFragment;
 import com.eventchat.view.MyEventsFragment;
@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements OnTabChangeListener {
                     new MyEventsFragment()));
             mTabHost.addTab(newTab(Constant.Tag.TAB_CHAT, R.string.chat,
                     R.id.tab_chat, R.drawable.tab_chat_selector,
-                    new ChatFragment()));
+                    new ConversationFragment()));
             mTabHost.addTab(newTab(Constant.Tag.TAB_ME, R.string.me,
                     R.id.tab_me, R.drawable.tab_me_selector,
                     new ProfileFragment()));

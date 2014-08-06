@@ -3,6 +3,7 @@ package com.eventchat.view;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.eventchat.ChatActivity;
 import com.eventchat.MainActivity;
 import com.eventchat.R;
 import com.eventchat.entity.User;
@@ -47,9 +49,8 @@ public class AttendeeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                MainActivity activity = (MainActivity) getActivity();
-                activity.setCurrentTab(Constant.Tag.TAB_CHAT);
-                
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

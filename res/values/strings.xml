@@ -31,5 +31,7 @@
     <string name="location">Location:</string>
     <string name="time">Time:</string>
     <string name="organizer">Organizer:</string>
+    <string name="chat_message_hint">Type something here...</string>
+    <string name="send">Send</string>
 
 </resources>
