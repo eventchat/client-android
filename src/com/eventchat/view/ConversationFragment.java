@@ -1,15 +1,10 @@
 package com.eventchat.view;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,12 +12,18 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.eventchat.ChatActivity;
 import com.eventchat.R;
+import com.eventchat.entity.ChatMessage;
 import com.eventchat.manager.ChatManager;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
+import com.eventchat.util.JsonParser;
+import com.eventchat.view.adapter.ConversationListAdapter;
 
 public class ConversationFragment extends Fragment {
 
@@ -31,17 +32,14 @@ public class ConversationFragment extends Fragment {
 
     private ListView mListView = null;
 
-    private List<String> mConversationList = null;
+    private List<ChatMessage> mConversationList = null;
 
     private ConversationHandler mHandler = null;
 
-    private SharedPreferences mPref = null;
-
-    private HashSet<String> mConversationSet = null;
+    private ConversationListAdapter mAdapter = null;
 
     public ConversationFragment() {
-        mHandler = new ConversationHandler(Looper.getMainLooper());
-        mConversationList = new ArrayList<String>();
+        mConversationList = new ArrayList<ChatMessage>();
     }
 
     @Override
@@ -50,26 +48,44 @@ public class ConversationFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.conversation_fragment,
                 container, false);
         mListView = (ListView) rootView.findViewById(R.id.conversation_list);
-        
-        mPref = getActivity().getSharedPreferences(
-                Constant.Data.SHARED_PREF_NAME, Context.MODE_PRIVATE);
         mHandler = new ConversationHandler(Looper.getMainLooper());
-        Set<String> defaultSet = new HashSet<String>();
-        mConversationSet = (HashSet<String>) mPref.getStringSet(
-                Constant.Data.CONVERSATION, defaultSet);
-        for (String conversation : mConversationSet) {
-            mConversationList.add(conversation);
-        }
+        mAdapter = new ConversationListAdapter(getActivity(), mConversationList);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.Data.CHAT_DATA,
+                        mConversationList.get(position).getFrom());
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
         ChatManager.getInstance().getChatMessage(mHandler);
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateConversationList(ChatManager.getInstance().getConversationList());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         DebugLog.d(TAG, "onDestroy");
-        Set<String> set = new HashSet<String>(mConversationList);
-        mPref.edit().putStringSet(Constant.Data.CONVERSATION, set).commit();
+    }
+
+    private void updateConversationList(List<ChatMessage> messages) {
+        ChatManager manager = ChatManager.getInstance();
+        manager.putChatMessage(messages);
+        mConversationList.clear();
+        mConversationList.addAll(manager.getConversationList());
+        mAdapter.notifyDataSetChanged();
     }
 
     private class ConversationHandler extends Handler {
@@ -80,7 +96,15 @@ public class ConversationFragment extends Fragment {
 
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+            DebugLog.d(TAG, "handleMessage");
+            switch (msg.what) {
+            case Constant.UI.UPDATE_CHAT_MESSAGE:
+                updateConversationList(JsonParser
+                        .parseReceiveMessages((String) msg.obj));
+                break;
+            default:
+                break;
+            }
         }
     }
 }

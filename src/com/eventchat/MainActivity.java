@@ -74,7 +74,6 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
     @Override
     public void onBackPressed() {
-        // super.onBackPressed();
         ChatManager.getInstance().dispose();
         finish();
     }
@@ -83,7 +82,7 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     public void onTabChanged(String tabId) {
         Log.d(TAG, "onTabChanged = " + tabId);
         // mTabHost.setCurrentTabByTag(tabId);
-        
+
     }
 
     public void setCurrentTab(String tag) {

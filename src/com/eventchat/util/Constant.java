@@ -84,6 +84,7 @@ public interface Constant {
     public interface Chat {
         static final String TO = "to";
         static final String MESSAGE = "message";
+        static final String FROM = "from";
     }
 
     // User API
@@ -135,6 +136,7 @@ public interface Constant {
         static final String LOGINT_STATUS = "/session";
     }
 
+    // Chat API
     public interface ChatApi {
         static final String SEND_CHAT = "/chat";
         static final String GET_CHAT = "/chat";
@@ -151,5 +153,7 @@ public interface Constant {
     public interface Data {
         static final String SHARED_PREF_NAME = "conversation_list";
         static final String CONVERSATION = "conversation";
+        static final String CHAT_DATA = "chat_data";
+        static final String PROFILE_DATA = "profile_data";
     }
 }

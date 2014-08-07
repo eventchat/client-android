@@ -7,10 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.eventchat.entity.Chat;
 import com.eventchat.entity.EntityFactory;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.Post;
+import com.eventchat.entity.ChatMessage;
 import com.eventchat.entity.User;
 
 public final class JsonParser {
@@ -88,16 +88,36 @@ public final class JsonParser {
         return post;
     }
 
-    public static Chat parseChat(String s) {
-        Chat chat = null;
+    public static List<ChatMessage> parseReceiveMessages(String s) {
+        List<ChatMessage> messages = new ArrayList<ChatMessage>();
+        JSONArray array = null;
         try {
-            JSONObject object = new JSONObject(s);
-            chat = EntityFactory.createChat(
-                    object.getString(Constant.Common.ID),
-                    object.getString(Constant.Common.ID));
+            array = new JSONArray(s);
+            for (int i = 0; i < array.length(); ++i) {
+                ChatMessage message = parseReceiveMessage(array.getString(i));
+                if (message != null) {
+                    messages.add(message);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return chat;
+        return messages;
+    }
+
+    private static ChatMessage parseReceiveMessage(String s) {
+        ChatMessage message = null;
+        JSONObject object = null;
+        try {
+            object = new JSONObject(s);
+            message = EntityFactory.createChatMessage(
+                    parseUser(object.getString(Constant.Chat.FROM)),
+                    parseUser(object.getString(Constant.Chat.TO)),
+                    object.getString(Constant.Chat.MESSAGE),
+                    object.getString(Constant.Common.CREATED_AT));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return message;
     }
 }

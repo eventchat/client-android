@@ -11,11 +11,10 @@ import android.widget.TextView;
 import com.eventchat.R;
 import com.eventchat.entity.User;
 import com.eventchat.manager.ProfileManager;
+import com.eventchat.util.Constant;
 import com.eventchat.view.adapter.ProfilePagerAdapter;
 
 public class ProfileFragment extends Fragment {
-
-    public static final String USER_PROFILE = "user_profile";
 
     private static final String TAG = ProfileFragment.class.getSimpleName();
 
@@ -36,9 +35,9 @@ public class ProfileFragment extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mUser = (User) bundle.get(USER_PROFILE);
+            mUser = (User) bundle.get(Constant.Data.PROFILE_DATA);
         }
-        if (mUser == null) {    
+        if (mUser == null) {
             mUser = ProfileManager.getInstance(getActivity()).getCurrentUser();
         }
         mDesc.setText(mUser.getInfo());

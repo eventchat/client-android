@@ -36,8 +36,9 @@ public final class EntityFactory {
         return new Post(id, title, type, body, createdAt, author, commentList);
     }
 
-    public static Chat createChat(String to, String message) {
-        return new Chat(to, message);
+    public static ChatMessage createChatMessage(User from, User to,
+            String message, String createdAt) {
+        return new ChatMessage(from, to, message, createdAt);
     }
 
     public static Comment createComment(String id, User author, String body,

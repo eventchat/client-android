@@ -13,7 +13,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.eventchat.ChatActivity;
-import com.eventchat.MainActivity;
 import com.eventchat.R;
 import com.eventchat.entity.User;
 import com.eventchat.util.Constant;
@@ -50,6 +49,10 @@ public class AttendeeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
                 Intent intent = new Intent(getActivity(), ChatActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constant.Data.CHAT_DATA,
+                        mAttendeeList.get(position));
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

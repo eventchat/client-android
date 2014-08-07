@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.eventchat.ProfileActivity;
 import com.eventchat.R;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.User;
@@ -97,16 +99,14 @@ public class EventFragment extends Fragment {
                     DebugLog.d(TAG, "onClick " + avatar.getContentDescription());
                     int index = Integer.valueOf(avatar.getContentDescription()
                             .toString());
-                    ProfileFragment fragment = new ProfileFragment();
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable(ProfileFragment.USER_PROFILE,
+                    bundle.putSerializable(Constant.Data.PROFILE_DATA,
                             userList.get(index));
-                    fragment.setArguments(bundle);
-                    FragmentTransaction transaction = getFragmentManager()
-                            .beginTransaction();
-                    transaction.replace(R.id.tab_join, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+
+                    Intent intent = new Intent(getActivity(),
+                            ProfileActivity.class);
+                    intent.putExtras(bundle);
+                    getActivity().startActivity(intent);
                 }
             });
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,

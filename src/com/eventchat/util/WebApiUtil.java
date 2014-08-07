@@ -6,11 +6,15 @@ import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
+import com.eventchat.util.Constant.Tag;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public final class WebApiUtil {
+
+    private static final String TAG = WebApiUtil.class.getSimpleName();
 
     private WebApiUtil() {
 
@@ -28,7 +32,9 @@ public final class WebApiUtil {
 
     public static boolean isSuccess(HttpResponse response) {
         if (response != null) {
-            return response.getStatusLine().getStatusCode() == HttpStatus.SC_ACCEPTED;
+            DebugLog.d(TAG, "isSuccess response status code = "
+                    + response.getStatusLine().getStatusCode());
+            return response.getStatusLine().getStatusCode() == HttpStatus.SC_OK;
         }
         return false;
     }

@@ -2,11 +2,6 @@ package com.eventchat.view.adapter;
 
 import java.util.List;
 
-import com.eventchat.R;
-import com.eventchat.entity.Chat;
-import com.eventchat.manager.ProfileManager;
-import com.eventchat.util.DebugLog;
-
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,15 +11,20 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.eventchat.R;
+import com.eventchat.entity.ChatMessage;
+import com.eventchat.manager.ProfileManager;
+import com.eventchat.util.DebugLog;
+
 public class ChatListAdapter extends BaseAdapter {
 
     private static final String TAG = ChatListAdapter.class.getSimpleName();
 
     private Context mContext = null;
 
-    private List<Chat> mChatList = null;
+    private List<ChatMessage> mChatList = null;
 
-    public ChatListAdapter(Context context, List<Chat> chatList) {
+    public ChatListAdapter(Context context, List<ChatMessage> chatList) {
         DebugLog.d(TAG, "ChatEntryAdapter");
         mContext = context;
         mChatList = chatList;
@@ -53,11 +53,13 @@ public class ChatListAdapter extends BaseAdapter {
         }
         LinearLayout layout = (LinearLayout) convertView;
         TextView message = (TextView) convertView.findViewById(R.id.message);
-        Chat chat = mChatList.get(position);
-        if (isMyself(chat.getTo())) {
+        ChatMessage chat = mChatList.get(position);
+        if (!isMyself(chat.getFrom().getId())) {
             layout.setGravity(Gravity.LEFT);
+            message.setBackgroundResource(R.drawable.bubble_yellow);
         } else {
             layout.setGravity(Gravity.RIGHT);
+            message.setBackgroundResource(R.drawable.bubble_green);
         }
         message.setText(chat.getMessage());
         return convertView;
