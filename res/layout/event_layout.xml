@@ -21,25 +21,30 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/events"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_marginTop="200dp"
             android:orientation="horizontal"
             android:paddingLeft="20dp" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hosted_by" />
+                android:text="@string/hosted_by"
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/organizer"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -51,6 +56,7 @@
         android:drawablePadding="5dp"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
+        android:paddingTop="10dp"
         android:textSize="16sp" />
 
     <TextView
@@ -60,18 +66,19 @@
         android:drawableLeft="@drawable/ico_time"
         android:drawablePadding="5dp"
         android:paddingLeft="20dp"
-        android:paddingTop="180dp"
         android:textSize="16sp" />
 
-    <GridLayout
+    <GridView
         android:id="@+id/attendee_list"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:rowCount="1" >
-    </GridLayout>
+        android:horizontalSpacing="10dp"
+        android:numColumns="7" >
+    </GridView>
 
     <ListView
         android:id="@+id/post_list"

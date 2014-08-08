@@ -41,9 +41,9 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
         // Set up the action bar.
         mActionBar = getActionBar();
-        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         mActionBar.setBackgroundDrawable(getResources().getDrawable(
                 R.color.theme));
+        mActionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -17,11 +17,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.eventchat.entity.Event;
@@ -31,6 +30,7 @@ import com.eventchat.manager.PostManager;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.JsonParser;
+import com.eventchat.view.adapter.AttendeeGridAdapter;
 
 public class EventActivity extends Activity {
 
@@ -46,7 +46,7 @@ public class EventActivity extends Activity {
 
     private TextView mEventOrganizer = null;
 
-    private GridLayout mEventAttendees = null;
+    private GridView mEventAttendees = null;
 
     private ProgressDialog mProgressDialog = null;
 
@@ -71,7 +71,7 @@ public class EventActivity extends Activity {
         mEventAddress = (TextView) findViewById(R.id.location);
         mEventTime = (TextView) findViewById(R.id.time);
         mEventOrganizer = (TextView) findViewById(R.id.organizer);
-        mEventAttendees = (GridLayout) findViewById(R.id.attendee_list);
+        mEventAttendees = (GridView) findViewById(R.id.attendee_list);
 
         mProgressDialog = showProgressDialog("", "");
 
@@ -79,6 +79,9 @@ public class EventActivity extends Activity {
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         mActionBar.setBackgroundDrawable(getResources().getDrawable(
                 R.color.theme));
+
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+        mActionBar.setHomeButtonEnabled(true);
 
         EventManager.getInstance(this).getEvent(mEventId, mHandler);
         EventManager.getInstance(this).getAttendeeList(mEventId, mHandler);
@@ -117,50 +120,32 @@ public class EventActivity extends Activity {
     }
 
     public void updateAttendeeList(final List<User> userList) {
-        DebugLog.d(TAG, "updateAttendeeList");
+        DebugLog.d(TAG, "updateAttendeeList size = " + userList.size());
         mAttendeeList = userList;
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (int i = 0; i < userList.size(); ++i) {
-            final View view = inflater.inflate(R.layout.attendee, null);
-            final ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-            avatar.setContentDescription("" + i);
-            avatar.setOnClickListener(new OnClickListener() {
+        mEventAttendees.setAdapter(new AttendeeGridAdapter(this, userList));
+        mEventAttendees.setOnItemClickListener(new OnItemClickListener() {
 
-                @Override
-                public void onClick(View v) {
-                    DebugLog.d(TAG, "onClick " + avatar.getContentDescription());
-                    int index = Integer.valueOf(avatar.getContentDescription()
-                            .toString());
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                if (position < Math.min(7, userList.size()) - 1) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constant.Data.PROFILE_DATA,
-                            userList.get(index));
+                            userList.get(position));
 
                     Intent intent = new Intent(EventActivity.this,
                             ProfileActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                } else {
+                    Intent intent = new Intent(EventActivity.this,
+                            AttendeeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.Data.ATTENDEE_DATA,
+                            (Serializable) mAttendeeList);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
-            });
-            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT);
-            mEventAttendees.addView(view, params);
-        }
-        final View view = inflater.inflate(R.layout.attendee, null);
-        final ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
-        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
-        mEventAttendees.addView(view, params);
-        avatar.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(EventActivity.this,
-                        AttendeeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(Constant.Data.ATTENDEE_DATA,
-                        (Serializable) mAttendeeList);
-                intent.putExtras(bundle);
-                startActivity(intent);
             }
         });
     }

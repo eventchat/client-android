@@ -6,6 +6,8 @@ import java.util.List;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +29,17 @@ public class JoinFragment extends Fragment {
 
     private static final String EVENT_ID = "53d6d749da0e0f0200e69de7";
 
-    public JoinFragment() {
+    private static final String EVENT_PATTERN = "2143";
 
+    private static final int DELAYED_TIME = 3000;
+
+    private StringBuffer mEventPattern = null;
+
+    private JoinHandler mHandler = null;
+
+    public JoinFragment() {
+        mEventPattern = new StringBuffer();
+        mHandler = new JoinHandler();
     }
 
     @Override
@@ -43,21 +54,39 @@ public class JoinFragment extends Fragment {
         eventList.add(EntityFactory.createEvent("3"));
         eventList.add(EntityFactory.createEvent("4"));
         gridView.setAdapter(new EventPatternAdapter(inflater, eventList));
+        gridView.setOnItemClickListener(new OnItemClickListener() {
 
-//        gridView.setOnItemClickListener(new OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view,
-//                    int position, long id) {
-//                DebugLog.d(TAG, "onItemClick");
-//                Intent intent = new Intent(getActivity(), EventActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(Constant.Data.EVENT_DATA, EVENT_ID);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            }
-//        });
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                    int position, long id) {
+                DebugLog.d(TAG, "onItemClick");
+                if (mEventPattern != null) {
+                    mEventPattern.append(position + 1);
+                    DebugLog.d(TAG, mEventPattern.toString());
+                    if (mEventPattern.toString().equals(EVENT_PATTERN)) {
+                        Intent intent = new Intent(getActivity(),
+                                EventActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable(Constant.Data.EVENT_DATA,
+                                EVENT_ID);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }
+                mHandler.sendEmptyMessageDelayed(0, DELAYED_TIME);
+            }
+        });
 
         return rootView;
+    }
+
+    private class JoinHandler extends Handler {
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (mEventPattern != null) {
+                mEventPattern = new StringBuffer();
+            }
+        }
     }
 }

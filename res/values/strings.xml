@@ -39,5 +39,6 @@
     <string name="post_title">New Post</string>
     <string name="post_type">text</string>
     <string name="hosted_by">Hosted by</string>
+    <string name="more">+</string>
 
 </resources>

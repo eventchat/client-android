@@ -44,6 +44,8 @@ public class ChatActivity extends Activity {
 
         getActionBar().setBackgroundDrawable(
                 getResources().getDrawable(R.color.theme));
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

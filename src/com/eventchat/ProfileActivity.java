@@ -38,6 +38,7 @@ public class ProfileActivity extends Activity {
         mActionBar.setTitle(mProfileUser.getName());
         mActionBar.setBackgroundDrawable(getResources().getDrawable(
                 R.color.theme));
+        mActionBar.setDisplayHomeAsUpEnabled(true);
 
         mDescTextView.setText(mProfileUser.getInfo());
     }
