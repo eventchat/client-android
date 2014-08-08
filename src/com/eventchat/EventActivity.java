@@ -1,10 +1,10 @@
-package com.eventchat.view;
+package com.eventchat;
 
 import java.io.Serializable;
 import java.util.List;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +14,11 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.eventchat.ProfileActivity;
-import com.eventchat.R;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.User;
 import com.eventchat.manager.EventManager;
@@ -29,9 +26,11 @@ import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.JsonParser;
 
-public class EventFragment extends Fragment {
+public class EventActivity extends Activity {
 
-    private static final String TAG = EventFragment.class.getSimpleName();
+    private static final String TAG = EventActivity.class.getSimpleName();
+
+    private String mEventId = null;
 
     private TextView mEventName = null;
 
@@ -47,38 +46,37 @@ public class EventFragment extends Fragment {
 
     private EventHandler mHandler = null;
 
-    private static final String EVENT_ID = "53d6d749da0e0f0200e69de7";
+    private List<User> mAttendeeList = null;
 
-    public EventFragment() {
-        mHandler = new EventHandler(Looper.getMainLooper());
-    }
+    private ActionBar mActionBar = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        DebugLog.d(TAG, "onCreateView");
-        View rootView = inflater.inflate(R.layout.event_fragment, container,
-                false);
-        mEventName = (TextView) rootView.findViewById(R.id.event_name);
-        mEventAddress = (TextView) rootView.findViewById(R.id.location_content);
-        mEventTime = (TextView) rootView.findViewById(R.id.time_content);
-        mEventOrganizer = (TextView) rootView
-                .findViewById(R.id.organizer_content);
-        mEventAttendees = (GridLayout) rootView
-                .findViewById(R.id.attendee_list);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.event_layout);
+        mActionBar = getActionBar();
+
+        Intent intent = getIntent();
+        mEventId = (String) intent.getExtras().getSerializable(
+                Constant.Data.EVENT_DATA);
+
+        mHandler = new EventHandler(Looper.getMainLooper());
+
+        mEventName = (TextView) findViewById(R.id.event_name);
+        mEventAddress = (TextView) findViewById(R.id.location_content);
+        mEventTime = (TextView) findViewById(R.id.time_content);
+        mEventOrganizer = (TextView) findViewById(R.id.organizer_content);
+        mEventAttendees = (GridLayout) findViewById(R.id.attendee_list);
 
         mProgressDialog = showProgressDialog("", "");
 
-        EventManager.getInstance(getActivity()).getEvent(EVENT_ID, mHandler);
-
-        EventManager.getInstance(getActivity()).getAttendeeList(EVENT_ID,
-                mHandler);
-
-        return rootView;
+        EventManager.getInstance(this).getEvent(mEventId, mHandler);
+        EventManager.getInstance(this).getAttendeeList(mEventId, mHandler);
     }
 
     public void updateEventInfo(Event event) {
         DebugLog.d(TAG, "updateEventInfo");
+        mActionBar.setTitle(event.getName());
         mEventName.setText(event.getName());
         mEventAddress.setText(event.getAddress());
         mEventTime.setText(event.getStartTime());
@@ -87,7 +85,8 @@ public class EventFragment extends Fragment {
 
     public void updateAttendeeList(final List<User> userList) {
         DebugLog.d(TAG, "updateAttendeeList");
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        mAttendeeList = userList;
+        LayoutInflater inflater = LayoutInflater.from(this);
         for (int i = 0; i < userList.size(); ++i) {
             final View view = inflater.inflate(R.layout.attendee, null);
             final ImageView avatar = (ImageView) view.findViewById(R.id.avatar);
@@ -103,10 +102,10 @@ public class EventFragment extends Fragment {
                     bundle.putSerializable(Constant.Data.PROFILE_DATA,
                             userList.get(index));
 
-                    Intent intent = new Intent(getActivity(),
+                    Intent intent = new Intent(EventActivity.this,
                             ProfileActivity.class);
                     intent.putExtras(bundle);
-                    getActivity().startActivity(intent);
+                    startActivity(intent);
                 }
             });
             LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -122,20 +121,19 @@ public class EventFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                AttendeeFragment fragment = new AttendeeFragment();
+                Intent intent = new Intent(EventActivity.this,
+                        AttendeeActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(AttendeeFragment.ATTENDEE_LIST,
-                        (Serializable) userList);
-                fragment.setArguments(bundle);
-                FragmentTransaction transaction = getFragmentManager()
-                        .beginTransaction().replace(R.id.tab_join, fragment);
-                transaction.commit();
+                bundle.putSerializable(Constant.Data.ATTENDEE_DATA,
+                        (Serializable) mAttendeeList);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
 
     private ProgressDialog showProgressDialog(String title, String message) {
-        return ProgressDialog.show(getActivity(), "", "");
+        return ProgressDialog.show(this, "", "");
     }
 
     private void hideProgressDialog(ProgressDialog dialog) {

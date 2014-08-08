@@ -17,6 +17,7 @@ import com.eventchat.view.adapter.EventPatternAdapter;
 
 public class JoinFragment extends Fragment {
 
+    @SuppressWarnings("unused")
     private static final String TAG = JoinFragment.class.getSimpleName();
 
     public JoinFragment() {

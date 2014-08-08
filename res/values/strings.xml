@@ -24,7 +24,8 @@
     <string name="posts">Posts</string>
     <string name="events">Events</string>
     <string name="friends">Friends</string>
-    <string name="xiaolei">xiaolei</string>
+    <string name="xiaolei">xiaolei@test.com</string>
+    <string name="password">xiaolei</string>
     <string name="attended">Attended</string>
     <string name="organized">Organized</string>
     <string name="_6">6</string>

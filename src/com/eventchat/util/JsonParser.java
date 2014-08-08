@@ -40,6 +40,22 @@ public final class JsonParser {
         return event;
     }
 
+    public static List<Event> parseEventList(String s) {
+        List<Event> eventList = new ArrayList<Event>();
+        try {
+            JSONArray objectArray = new JSONArray(s);
+            for (int i = 0; i < objectArray.length(); ++i) {
+                Event event = parseEvent(objectArray.getString(i));
+                if (event != null) {
+                    eventList.add(event);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return eventList;
+    }
+
     public static List<User> parseUserList(String s) {
         List<User> userList = new ArrayList<User>();
         try {

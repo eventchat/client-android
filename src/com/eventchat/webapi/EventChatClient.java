@@ -181,6 +181,16 @@ public final class EventChatClient {
                 RequestBuilder.buildGetChatMessageRequest()).with(callback));
     }
 
+    public void getEventListByUserId(String userId, OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildGetEventListRequest(userId)).with(callback));
+    }
+
+    public void getPostListByEventId(String eventId, OnReceiveCallback callback) {
+        sendRequest(new EventChatRequest().with(
+                RequestBuilder.buildGetPostListRequest(eventId)).with(callback));
+    }
+
     public void destory() {
         mRequestThread.stopThread();
     }

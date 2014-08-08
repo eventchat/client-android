@@ -115,6 +115,8 @@ public interface Constant {
         static final String DELETE_EVENT = "/events/%s";
         static final String JOINT_EVENT = "/events/%s/attendees";
         static final String GET_ATTENDEE_LIST = "/events/%s/attendees";
+        static final String GET_EVENT_LIST = "/users/%s/events";
+        static final String GET_EVENT_POST_LIST = "/events/%s/posts";
     }
 
     // Message API
@@ -147,6 +149,7 @@ public interface Constant {
         static final int UPDATE_EVENT_INFO = 0;
         static final int UPDATE_EVENT_ATTENDEE = 1;
         static final int UPDATE_CHAT_MESSAGE = 2;
+        static final int UPDATE_EVENT_LIST = 3;
     }
 
     // Data
@@ -155,5 +158,7 @@ public interface Constant {
         static final String CONVERSATION = "conversation";
         static final String CHAT_DATA = "chat_data";
         static final String PROFILE_DATA = "profile_data";
+        static final String EVENT_DATA = "event_data";
+        static final String ATTENDEE_DATA = "attendee_data";
     }
 }

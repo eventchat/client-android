@@ -332,8 +332,8 @@ final class RequestBuilder {
             HttpPost post = new HttpPost(url);
             try {
                 List<NameValuePair> valuePairs = new ArrayList<NameValuePair>();
-                valuePairs.add(new BasicNameValuePair(Constant.Common.NAME,
-                        name));
+                valuePairs
+                        .add(new BasicNameValuePair(Constant.User.EMAIL, name));
                 valuePairs.add(new BasicNameValuePair(Constant.Common.PASSWORD,
                         password));
                 post.setEntity(new UrlEncodedFormEntity(valuePairs));
@@ -368,6 +368,28 @@ final class RequestBuilder {
     }
 
     public static HttpRequest buildGetRequestWithUrl(String url) {
+        HttpRequest request = null;
+        try {
+            request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+        } catch (MethodNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public static HttpRequest buildGetEventListRequest(String userId) {
+        String url = buildUrl(Constant.EventApi.GET_EVENT_LIST, userId);
+        HttpRequest request = null;
+        try {
+            request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);
+        } catch (MethodNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return request;
+    }
+
+    public static HttpRequest buildGetPostListRequest(String eventId) {
+        String url = buildUrl(Constant.EventApi.GET_EVENT_POST_LIST, eventId);
         HttpRequest request = null;
         try {
             request = sFactory.newHttpRequest(Constant.Http.HTTP_GET, url);

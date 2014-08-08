@@ -76,6 +76,20 @@ public class EventManager implements IDispose {
         }
     }
 
+    public void getEventListByUserId(String userId, Handler handler) {
+        if (mClient != null) {
+            mClient.getEventListByUserId(userId, new GetEventListCallback(
+                    handler));
+        }
+    }
+
+    public void getPostListByEventId(String eventId, Handler handler) {
+        if (mClient != null) {
+            mClient.getPostListByEventId(eventId, new GetPostListCallback(
+                    handler));
+        }
+    }
+
     public void getAttendeeList(String eventId, Handler handler) {
         if (mClient != null) {
             mClient.getAttendeeList(eventId, new GetAttendeeListCallback(
@@ -163,6 +177,40 @@ public class EventManager implements IDispose {
             Message msg = mHandler.obtainMessage(
                     Constant.UI.UPDATE_EVENT_ATTENDEE, res);
             mHandler.sendMessage(msg);
+        }
+    }
+
+    private class GetEventListCallback implements OnReceiveCallback {
+
+        private Handler mHandler = null;
+
+        public GetEventListCallback(Handler handler) {
+            mHandler = handler;
+        }
+
+        @Override
+        public void onReceive(HttpResponse response) {
+            if (WebApiUtil.isSuccess(response)) {
+                String res = WebApiUtil.resToString(response);
+                DebugLog.d(TAG, res);
+                Message msg = mHandler.obtainMessage(
+                        Constant.UI.UPDATE_EVENT_LIST, res);
+                mHandler.sendMessage(msg);
+            }
+        }
+    }
+
+    private class GetPostListCallback implements OnReceiveCallback {
+
+        private Handler mHandler = null;
+
+        public GetPostListCallback(Handler handler) {
+            mHandler = handler;
+        }
+
+        @Override
+        public void onReceive(HttpResponse response) {
+
         }
     }
 }

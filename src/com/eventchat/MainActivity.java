@@ -1,9 +1,12 @@
 package com.eventchat;
 
+import javax.crypto.Mac;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +24,6 @@ import com.eventchat.manager.ChatManager;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.view.ConversationFragment;
-import com.eventchat.view.EventFragment;
 import com.eventchat.view.JoinFragment;
 import com.eventchat.view.MyEventsFragment;
 import com.eventchat.view.ProfileFragment;
@@ -30,6 +32,8 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    private static final String EVENT_ID = "53d6d749da0e0f0200e69de7";
+
     private TabHost mTabHost = null;
 
     @Override
@@ -37,6 +41,7 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         DebugLog.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
         mTabHost = (TabHost) findViewById(R.id.tab_host);
         setupTabs();
 
@@ -56,12 +61,12 @@ public class MainActivity extends Activity implements OnTabChangeListener {
                 public void onItemClick(AdapterView<?> parent, View view,
                         int position, long id) {
                     DebugLog.d(TAG, "onItemClick");
-                    EventFragment fragment = new EventFragment();
-                    FragmentTransaction transaction = getFragmentManager()
-                            .beginTransaction();
-                    transaction.replace(R.id.tab_join, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+                    Intent intent = new Intent(MainActivity.this,
+                            EventActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constant.Data.EVENT_DATA, EVENT_ID);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
         }
@@ -82,7 +87,15 @@ public class MainActivity extends Activity implements OnTabChangeListener {
     public void onTabChanged(String tabId) {
         Log.d(TAG, "onTabChanged = " + tabId);
         // mTabHost.setCurrentTabByTag(tabId);
-
+        if (tabId.equals(Constant.Tag.TAB_JOIN)) {
+            getActionBar().setTitle(R.string.app_name);
+        } else if (tabId.equals(Constant.Tag.TAB_CHAT)) {
+            getActionBar().setTitle(R.string.chat);
+        } else if (tabId.equals(Constant.Tag.TAB_EVENT)) {
+            getActionBar().setTitle(R.string.my_events);
+        } else if (tabId.equals(Constant.Tag.TAB_ME)) {
+            getActionBar().setTitle(R.string.me);
+        }
     }
 
     public void setCurrentTab(String tag) {
