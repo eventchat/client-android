@@ -26,7 +26,7 @@ public class AttendeeActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.attendee_fragment);
+        setContentView(R.layout.attendee_layout);
 
         getActionBar().setBackgroundDrawable(
                 getResources().getDrawable(R.color.theme));

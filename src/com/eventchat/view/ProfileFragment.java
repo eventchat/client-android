@@ -41,16 +41,6 @@ public class ProfileFragment extends Fragment {
             mUser = ProfileManager.getInstance(getActivity()).getCurrentUser();
         }
         mDesc.setText(mUser.getInfo());
-
-        ViewPager pager = (ViewPager) rootView.findViewById(R.id.pager);
-        pager.setAdapter(new ProfilePagerAdapter(getFragmentManager()));
-        pager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
-        });
         return rootView;
     }
 }

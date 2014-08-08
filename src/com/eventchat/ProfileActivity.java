@@ -1,16 +1,14 @@
 package com.eventchat;
 
-import com.eventchat.entity.User;
-import com.eventchat.util.Constant;
-import com.eventchat.view.adapter.ProfilePagerAdapter;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.eventchat.entity.User;
+import com.eventchat.util.Constant;
 
 public class ProfileActivity extends Activity {
 
@@ -24,8 +22,6 @@ public class ProfileActivity extends Activity {
 
     private User mProfileUser = null;
 
-    private ViewPager mViewPager = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +29,6 @@ public class ProfileActivity extends Activity {
         mActionBar = getActionBar();
         mDescTextView = (TextView) findViewById(R.id.desc);
         mAvatarImage = (ImageView) findViewById(R.id.avatar);
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(new ProfilePagerAdapter(getFragmentManager()));
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();

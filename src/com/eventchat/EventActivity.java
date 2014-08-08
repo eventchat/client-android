@@ -68,9 +68,9 @@ public class EventActivity extends Activity {
         mHandler = new EventHandler(Looper.getMainLooper());
 
         mEventName = (TextView) findViewById(R.id.event_name);
-        mEventAddress = (TextView) findViewById(R.id.location_content);
-        mEventTime = (TextView) findViewById(R.id.time_content);
-        mEventOrganizer = (TextView) findViewById(R.id.organizer_content);
+        mEventAddress = (TextView) findViewById(R.id.location);
+        mEventTime = (TextView) findViewById(R.id.time);
+        mEventOrganizer = (TextView) findViewById(R.id.organizer);
         mEventAttendees = (GridLayout) findViewById(R.id.attendee_list);
 
         mProgressDialog = showProgressDialog("", "");

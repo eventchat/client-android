@@ -38,5 +38,6 @@
     <string name="cancel">Cancel</string>
     <string name="post_title">New Post</string>
     <string name="post_type">text</string>
+    <string name="hosted_by">Hosted by</string>
 
 </resources>

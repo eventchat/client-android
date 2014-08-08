@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.eventchat.R;
 import com.eventchat.entity.Event;
+import com.eventchat.util.DebugLog;
 
 public class EventListAdapter extends BaseAdapter {
 
@@ -42,21 +43,20 @@ public class EventListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = LayoutInflater.from(mContext);
-            convertView = inflater.inflate(R.layout.event_layout, null);
+            convertView = inflater.inflate(R.layout.event_entry, null);
         }
         Event event = mEventList.get(position);
         TextView eventNameText = (TextView) convertView
                 .findViewById(R.id.event_name);
         TextView locationText = (TextView) convertView
-                .findViewById(R.id.location_content);
-        TextView timeText = (TextView) convertView
-                .findViewById(R.id.time_content);
-        TextView organizerText = (TextView) convertView
-                .findViewById(R.id.organizer_content);
+                .findViewById(R.id.location);
+        TextView timeText = (TextView) convertView.findViewById(R.id.time);
         eventNameText.setText(event.getName());
         locationText.setText(event.getAddress());
         timeText.setText(event.getStartTime());
-        organizerText.setText(event.getOrganizer());
+        DebugLog.d("EventListAdapter", "==========================");
+        DebugLog.d("EventListAdapter", event.getStartTime());
+        DebugLog.d("EventListAdapter", "==========================");
         return convertView;
     }
 }
