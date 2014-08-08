@@ -1,33 +1,50 @@
 package com.eventchat.view.adapter;
 
+import java.util.List;
+
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.eventchat.R;
+import com.eventchat.entity.Post;
+
 public class PostListAdapter extends BaseAdapter {
+
+    private Context mContext = null;
+
+    private List<Post> mPostList = null;
+
+    public PostListAdapter(Context context, List<Post> postList) {
+        mContext = context;
+        mPostList = postList;
+    }
 
     @Override
     public int getCount() {
-        // TODO Auto-generated method stub
-        return 0;
+        return mPostList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return null;
+        return mPostList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        return null;
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+            convertView = inflater.inflate(R.layout.post_entry, null);
+        }
+
+        return convertView;
     }
 
 }

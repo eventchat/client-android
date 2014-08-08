@@ -2,29 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.eventchat.TabFragment" >
+    android:layout_height="match_parent" >
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/avatar"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/placeholder" />
 
     <TextView
         android:id="@+id/autor_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/avatar"
-        android:text="@string/user_name_hint" />
+        android:text="@string/user_name_hint"
+        android:textColor="@color/theme" />
 
     <TextView
         android:id="@+id/post_date"
@@ -47,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:drawableTop="@drawable/ic_launcher"
+        android:drawableTop="@drawable/ico_comment"
         android:text="@string/_6" />
 
     <TextView
@@ -55,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/post_comment_num"
-        android:drawableTop="@drawable/ic_launcher"
+        android:drawableTop="@drawable/ico_like"
         android:text="@string/_6" />
 
     <TextView
@@ -63,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/post_content"
-        android:drawableLeft="@drawable/ic_launcher"
+        android:drawableLeft="@drawable/ico_like"
         android:text="@string/like" />
 
     <TextView
@@ -72,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/post_content"
         android:layout_toRightOf="@id/like"
-        android:drawableLeft="@drawable/ic_launcher"
+        android:drawableLeft="@drawable/ico_comment"
         android:text="@string/comment" />
 
 </RelativeLayout>

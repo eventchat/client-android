@@ -1,6 +1,7 @@
 package com.eventchat;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -21,9 +22,11 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.eventchat.entity.Event;
+import com.eventchat.entity.Post;
 import com.eventchat.entity.User;
 import com.eventchat.manager.EventManager;
 import com.eventchat.manager.PostManager;
@@ -31,6 +34,7 @@ import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.JsonParser;
 import com.eventchat.view.adapter.AttendeeGridAdapter;
+import com.eventchat.view.adapter.PostListAdapter;
 
 public class EventActivity extends Activity {
 
@@ -48,18 +52,27 @@ public class EventActivity extends Activity {
 
     private GridView mEventAttendees = null;
 
+    private ListView mPostListView = null;
+
     private ProgressDialog mProgressDialog = null;
 
     private EventHandler mHandler = null;
 
     private List<User> mAttendeeList = null;
 
+    private List<Post> mPostList = null;
+
     private ActionBar mActionBar = null;
+
+    private PostListAdapter mAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
+
+        mPostList = new ArrayList<Post>();
+        mAdapter = new PostListAdapter(this, mPostList);
 
         Intent intent = getIntent();
         mEventId = (String) intent.getExtras().getSerializable(
@@ -72,6 +85,8 @@ public class EventActivity extends Activity {
         mEventTime = (TextView) findViewById(R.id.time);
         mEventOrganizer = (TextView) findViewById(R.id.organizer);
         mEventAttendees = (GridView) findViewById(R.id.attendee_list);
+        mPostListView = (ListView) findViewById(R.id.post_list);
+        mPostListView.setAdapter(mAdapter);
 
         mProgressDialog = showProgressDialog("", "");
 
@@ -85,6 +100,7 @@ public class EventActivity extends Activity {
 
         EventManager.getInstance(this).getEvent(mEventId, mHandler);
         EventManager.getInstance(this).getAttendeeList(mEventId, mHandler);
+        PostManager.getInstance().getPostListByEventId(mEventId, mHandler);
     }
 
     @Override
@@ -150,6 +166,12 @@ public class EventActivity extends Activity {
         });
     }
 
+    public void updatePostList(List<Post> postList) {
+        mPostList.clear();
+        mPostList.addAll(postList);
+        mAdapter.notifyDataSetChanged();
+    }
+
     private ProgressDialog showProgressDialog(String title, String message) {
         return ProgressDialog.show(this, "", "");
     }
@@ -174,14 +196,13 @@ public class EventActivity extends Activity {
                             @Override
                             public void onClick(DialogInterface dialog,
                                     int which) {
-                                PostManager.getInstance(EventActivity.this)
-                                        .createPost(
-                                                getResources().getString(
-                                                        R.string.post_title),
-                                                getResources().getString(
-                                                        R.string.post_type),
-                                                content.getEditableText()
-                                                        .toString(), mEventId);
+                                PostManager.getInstance().createPost(
+                                        getResources().getString(
+                                                R.string.post_title),
+                                        getResources().getString(
+                                                R.string.post_type),
+                                        content.getEditableText().toString(),
+                                        mEventId);
                             }
                         }).setTitle(R.string.post_title).create().show();
     }
@@ -200,6 +221,9 @@ public class EventActivity extends Activity {
                 break;
             case Constant.UI.UPDATE_EVENT_ATTENDEE:
                 updateAttendeeList(JsonParser.parseUserList((String) msg.obj));
+                break;
+            case Constant.UI.UPDATE_POST_LIST:
+                updatePostList(JsonParser.parsePostList((String) msg.obj));
                 break;
             default:
                 throw new IllegalArgumentException();

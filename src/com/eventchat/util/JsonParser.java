@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.eventchat.entity.Comment;
 import com.eventchat.entity.EntityFactory;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.Post;
@@ -92,16 +93,68 @@ public final class JsonParser {
         Post post = null;
         try {
             JSONObject object = new JSONObject(s);
-            post = EntityFactory.createPost(
-                    object.getString(Constant.Common.ID),
-                    object.getString(Constant.Common.NAME),
-                    object.getString(Constant.Post.TYPE),
-                    object.getString(Constant.Common.BODY),
-                    object.getString(Constant.Common.CREATED_AT), null, null);
+            post = EntityFactory.createPost(object
+                    .getString(Constant.Common.ID), object
+                    .getString(Constant.Post.TITLE), object
+                    .getString(Constant.Post.TYPE), object
+                    .getString(Constant.Common.BODY), object
+                    .getString(Constant.Common.CREATED_AT), parseUser(object
+                    .getString(Constant.Common.AUTHOR)),
+                    parseCommentList(object
+                            .getString(Constant.Comment.COMMENTS)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return post;
+    }
+
+    public static List<Post> parsePostList(String s) {
+        List<Post> posts = new ArrayList<Post>();
+        JSONArray array = null;
+        try {
+            array = new JSONArray(s);
+            for (int i = 0; i < array.length(); ++i) {
+                Post post = parsePost(array.getString(i));
+                if (post != null) {
+                    posts.add(post);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return posts;
+    }
+
+    public static Comment parseComment(String s) {
+        Comment comment = null;
+        try {
+            JSONObject object = new JSONObject(s);
+            comment = EntityFactory.createComment(
+                    object.getString(Constant.Common.ID),
+                    parseUser(object.getString(Constant.Common.AUTHOR)),
+                    object.getString(Constant.Common.BODY),
+                    object.getString(Constant.Common.CREATED_AT));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return comment;
+    }
+
+    public static List<Comment> parseCommentList(String s) {
+        List<Comment> comments = new ArrayList<Comment>();
+        JSONArray array = null;
+        try {
+            array = new JSONArray(s);
+            for (int i = 0; i < array.length(); ++i) {
+                Comment comment = parseComment(array.getString(i));
+                if (comment != null) {
+                    comments.add(comment);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return comments;
     }
 
     public static List<ChatMessage> parseReceiveMessages(String s) {
@@ -136,4 +189,5 @@ public final class JsonParser {
         }
         return message;
     }
+
 }

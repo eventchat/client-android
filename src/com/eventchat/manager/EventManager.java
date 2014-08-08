@@ -83,13 +83,6 @@ public class EventManager implements IDispose {
         }
     }
 
-    public void getPostListByEventId(String eventId, Handler handler) {
-        if (mClient != null) {
-            mClient.getPostListByEventId(eventId, new GetPostListCallback(
-                    handler));
-        }
-    }
-
     public void getAttendeeList(String eventId, Handler handler) {
         if (mClient != null) {
             mClient.getAttendeeList(eventId, new GetAttendeeListCallback(
@@ -197,20 +190,6 @@ public class EventManager implements IDispose {
                         Constant.UI.UPDATE_EVENT_LIST, res);
                 mHandler.sendMessage(msg);
             }
-        }
-    }
-
-    private class GetPostListCallback implements OnReceiveCallback {
-
-        private Handler mHandler = null;
-
-        public GetPostListCallback(Handler handler) {
-            mHandler = handler;
-        }
-
-        @Override
-        public void onReceive(HttpResponse response) {
-
         }
     }
 }

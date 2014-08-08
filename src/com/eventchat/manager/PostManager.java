@@ -1,11 +1,11 @@
 package com.eventchat.manager;
 
 import org.apache.http.HttpResponse;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
+import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.WebApiUtil;
 import com.eventchat.webapi.EventChatClient;
@@ -17,8 +17,6 @@ public final class PostManager implements IDispose {
 
     private static PostManager sInstance = new PostManager();
 
-    private static Context sContext = null;
-
     private EventChatClient mClient = null;
 
     private PostManager() {
@@ -26,15 +24,21 @@ public final class PostManager implements IDispose {
         mClient = EventChatClient.getInstance();
     }
 
-    public static PostManager getInstance(Context context) {
+    public static PostManager getInstance() {
         DebugLog.d(TAG, "getInstance");
-        sContext = context;
         return sInstance;
     }
 
     public void getPost(String postId) {
         if (mClient != null) {
             mClient.getPost(postId, new GetPostCallback());
+        }
+    }
+
+    public void getPostListByEventId(String eventId, Handler handler) {
+        if (mClient != null) {
+            mClient.getPostListByEventId(eventId, new GetPostListCallback(
+                    handler));
         }
     }
 
@@ -65,10 +69,6 @@ public final class PostManager implements IDispose {
         }
     }
 
-    public void updateView(int position) {
-
-    }
-
     @Override
     public void dispose() {
         // TODO Auto-generated method stub
@@ -80,11 +80,11 @@ public final class PostManager implements IDispose {
         public void onReceive(HttpResponse response) {
             String content = WebApiUtil.resToString(response);
             DebugLog.d(TAG, content);
-            try {
-                JSONObject object = new JSONObject(content);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            // try {
+            // JSONObject object = new JSONObject(content);
+            // } catch (JSONException e) {
+            // e.printStackTrace();
+            // }
         }
     }
 
@@ -93,6 +93,26 @@ public final class PostManager implements IDispose {
         @Override
         public void onReceive(HttpResponse response) {
             DebugLog.d(TAG, WebApiUtil.resToString(response));
+        }
+    }
+
+    private class GetPostListCallback implements OnReceiveCallback {
+
+        private Handler mHandler = null;
+
+        public GetPostListCallback(Handler handler) {
+            mHandler = handler;
+        }
+
+        @Override
+        public void onReceive(HttpResponse response) {
+            if (WebApiUtil.isSuccess(response)) {
+                String res = WebApiUtil.resToString(response);
+                DebugLog.d(TAG, res);
+                Message msg = mHandler.obtainMessage(
+                        Constant.UI.UPDATE_POST_LIST, res);
+                mHandler.sendMessage(msg);
+            }
         }
     }
 

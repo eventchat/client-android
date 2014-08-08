@@ -49,7 +49,7 @@ public interface Constant {
     // Key for comment
     // The same as common keys
     public interface Comment {
-
+        static final String COMMENTS = "comments";
     }
 
     // Key for event
@@ -150,6 +150,7 @@ public interface Constant {
         static final int UPDATE_EVENT_ATTENDEE = 1;
         static final int UPDATE_CHAT_MESSAGE = 2;
         static final int UPDATE_EVENT_LIST = 3;
+        static final int UPDATE_POST_LIST = 4;
     }
 
     // Data
