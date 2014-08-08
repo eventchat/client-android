@@ -1,7 +1,5 @@
 package com.eventchat;
 
-import javax.crypto.Mac;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
@@ -36,6 +34,8 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
     private TabHost mTabHost = null;
 
+    private ActionBar mActionBar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreate");
@@ -46,8 +46,8 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         setupTabs();
 
         // Set up the action bar.
-        final ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        mActionBar = getActionBar();
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
     }
 
     @Override
@@ -88,13 +88,13 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         Log.d(TAG, "onTabChanged = " + tabId);
         // mTabHost.setCurrentTabByTag(tabId);
         if (tabId.equals(Constant.Tag.TAB_JOIN)) {
-            getActionBar().setTitle(R.string.app_name);
+            mActionBar.setTitle(R.string.app_name);
         } else if (tabId.equals(Constant.Tag.TAB_CHAT)) {
-            getActionBar().setTitle(R.string.chat);
+            mActionBar.setTitle(R.string.chat);
         } else if (tabId.equals(Constant.Tag.TAB_EVENT)) {
-            getActionBar().setTitle(R.string.my_events);
+            mActionBar.setTitle(R.string.my_events);
         } else if (tabId.equals(Constant.Tag.TAB_ME)) {
-            getActionBar().setTitle(R.string.me);
+            mActionBar.setTitle(R.string.me);
         }
     }
 

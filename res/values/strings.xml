@@ -34,5 +34,9 @@
     <string name="organizer">Organizer:</string>
     <string name="chat_message_hint">Type something here...</string>
     <string name="send">Send</string>
+    <string name="compose">Compose</string>
+    <string name="cancel">Cancel</string>
+    <string name="post_title">New Post</string>
+    <string name="post_type">text</string>
 
 </resources>

@@ -5,15 +5,20 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout.LayoutParams;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 import com.eventchat.entity.Event;
 import com.eventchat.entity.User;
 import com.eventchat.manager.EventManager;
+import com.eventchat.manager.PostManager;
 import com.eventchat.util.Constant;
 import com.eventchat.util.DebugLog;
 import com.eventchat.util.JsonParser;
@@ -54,7 +60,6 @@ public class EventActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
-        mActionBar = getActionBar();
 
         Intent intent = getIntent();
         mEventId = (String) intent.getExtras().getSerializable(
@@ -70,8 +75,34 @@ public class EventActivity extends Activity {
 
         mProgressDialog = showProgressDialog("", "");
 
+        mActionBar = getActionBar();
+        mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+
         EventManager.getInstance(this).getEvent(mEventId, mHandler);
         EventManager.getInstance(this).getAttendeeList(mEventId, mHandler);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.compose:
+            showComposeDialog();
+            break;
+        default:
+            break;
+        }
+        return true;
     }
 
     public void updateEventInfo(Event event) {
@@ -140,6 +171,32 @@ public class EventActivity extends Activity {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    private void showComposeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.compose_dialog, null);
+        final EditText content = (EditText) view.findViewById(R.id.content);
+        builder.setView(view)
+                .setCancelable(false)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.post,
+                        new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                    int which) {
+                                PostManager.getInstance(EventActivity.this)
+                                        .createPost(
+                                                getResources().getString(
+                                                        R.string.post_title),
+                                                getResources().getString(
+                                                        R.string.post_type),
+                                                content.getEditableText()
+                                                        .toString(), mEventId);
+                            }
+                        }).setTitle(R.string.post_title).create().show();
     }
 
     private class EventHandler extends Handler {
