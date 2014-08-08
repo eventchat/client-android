@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawableTop="@drawable/tab_join_selector"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="@drawable/tab_text_selector" />
 
 </LinearLayout>

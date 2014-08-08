@@ -42,6 +42,9 @@ public class ChatActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.chat_layout);
 
+        getActionBar().setBackgroundDrawable(
+                getResources().getDrawable(R.color.theme));
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mTargetUser = (User) bundle.getSerializable(Constant.Data.CHAT_DATA);

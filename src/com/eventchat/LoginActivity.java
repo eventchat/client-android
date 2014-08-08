@@ -26,6 +26,8 @@ public class LoginActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         DebugLog.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
+        getActionBar().setBackgroundDrawable(
+                getResources().getDrawable(R.color.theme));
 
         if (WebApiUtil.isInternetConnected(this)) {
             setContentView(R.layout.login_activity);

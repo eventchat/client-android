@@ -27,6 +27,10 @@ public class AttendeeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.attendee_fragment);
+
+        getActionBar().setBackgroundDrawable(
+                getResources().getDrawable(R.color.theme));
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         mAttendeeList = (List<User>) bundle

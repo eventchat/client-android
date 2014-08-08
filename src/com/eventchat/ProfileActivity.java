@@ -42,6 +42,9 @@ public class ProfileActivity extends Activity {
                 .getSerializable(Constant.Data.PROFILE_DATA);
 
         mActionBar.setTitle(mProfileUser.getName());
+        mActionBar.setBackgroundDrawable(getResources().getDrawable(
+                R.color.theme));
+
         mDescTextView.setText(mProfileUser.getInfo());
     }
 

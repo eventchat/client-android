@@ -4,15 +4,11 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.TabHost;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -30,8 +26,6 @@ public class MainActivity extends Activity implements OnTabChangeListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    private static final String EVENT_ID = "53d6d749da0e0f0200e69de7";
-
     private TabHost mTabHost = null;
 
     private ActionBar mActionBar = null;
@@ -48,28 +42,8 @@ public class MainActivity extends Activity implements OnTabChangeListener {
         // Set up the action bar.
         mActionBar = getActionBar();
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GridView view = (GridView) findViewById(R.id.pattern);
-        if (view != null) {
-            view.setOnItemClickListener(new OnItemClickListener() {
-
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                        int position, long id) {
-                    DebugLog.d(TAG, "onItemClick");
-                    Intent intent = new Intent(MainActivity.this,
-                            EventActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(Constant.Data.EVENT_DATA, EVENT_ID);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            });
-        }
+        mActionBar.setBackgroundDrawable(getResources().getDrawable(
+                R.color.theme));
     }
 
     @Override

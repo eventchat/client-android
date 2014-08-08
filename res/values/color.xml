@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="theme">#FDA10F</color>
+    <color name="selected">#FDA10F</color>
+
+    <drawable name="button_default">#FDA10F</drawable>
+    <drawable name="button_selected">#7D817F</drawable>
+
+</resources>

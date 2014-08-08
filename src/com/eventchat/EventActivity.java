@@ -77,6 +77,8 @@ public class EventActivity extends Activity {
 
         mActionBar = getActionBar();
         mActionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        mActionBar.setBackgroundDrawable(getResources().getDrawable(
+                R.color.theme));
 
         EventManager.getInstance(this).getEvent(mEventId, mHandler);
         EventManager.getInstance(this).getAttendeeList(mEventId, mHandler);
