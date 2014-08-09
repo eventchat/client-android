@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.eventchat.R;
 import com.eventchat.entity.Post;
@@ -43,7 +44,22 @@ public class PostListAdapter extends BaseAdapter {
             LayoutInflater inflater = LayoutInflater.from(mContext);
             convertView = inflater.inflate(R.layout.post_entry, null);
         }
-
+        TextView authorText = (TextView) convertView
+                .findViewById(R.id.autor_name);
+        TextView postDateText = (TextView) convertView
+                .findViewById(R.id.post_date);
+        TextView postContentText = (TextView) convertView
+                .findViewById(R.id.post_content);
+        TextView likeNumText = (TextView) convertView
+                .findViewById(R.id.post_like_num);
+        TextView commentNumText = (TextView) convertView
+                .findViewById(R.id.post_comment_num);
+        Post post = mPostList.get(position);
+        authorText.setText(post.getAuthor().getName());
+        postDateText.setText(post.getCreatedAt());
+        postContentText.setText(post.getBody());
+        likeNumText.setText("" + post.getLikedUserList().size());
+        commentNumText.setText("" + post.getCommentList().size());
         return convertView;
     }
 

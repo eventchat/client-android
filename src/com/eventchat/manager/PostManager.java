@@ -42,6 +42,13 @@ public final class PostManager implements IDispose {
         }
     }
 
+    public void getPostListByUserId(String userId, Handler handler) {
+        if (mClient != null) {
+            mClient.getPostListByUserId(userId,
+                    new GetPostListCallback(handler));
+        }
+    }
+
     public void createPost(String title, String type, String body,
             String eventId) {
         if (mClient != null) {

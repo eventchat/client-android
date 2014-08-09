@@ -28,7 +28,7 @@ public class AttendeeGridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return Math.min(mAttendeeList.size(), GRID_COLUMN);
+        return Math.min(mAttendeeList.size() + 1, GRID_COLUMN);
     }
 
     @Override

@@ -14,13 +14,15 @@ public class Post implements Serializable {
     private String mCreatedAt = null;
     private User mAuthor = null;
     private List<Comment> mCommentList = null;
+    private List<User> mLikedUserList = null;
 
     public Post() {
 
     }
 
     public Post(String id, String title, String type, String body,
-            String createdAt, User author, List<Comment> commentList) {
+            String createdAt, User author, List<Comment> commentList,
+            List<User> likedUserList) {
         mId = id;
         mTitle = title;
         mType = type;
@@ -28,6 +30,7 @@ public class Post implements Serializable {
         mCreatedAt = createdAt;
         mAuthor = author;
         mCommentList = commentList;
+        mLikedUserList = likedUserList;
     }
 
     public String getId() {
@@ -78,11 +81,19 @@ public class Post implements Serializable {
         this.mAuthor = author;
     }
 
-    public List<Comment> getComments() {
+    public List<Comment> getCommentList() {
         return mCommentList;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.mCommentList = comments;
+    public void setCommentList(List<Comment> commentList) {
+        this.mCommentList = commentList;
+    }
+
+    public List<User> getLikedUserList() {
+        return mLikedUserList;
+    }
+
+    public void setLikedUserList(List<User> likedUserList) {
+        this.mLikedUserList = likedUserList;
     }
 }

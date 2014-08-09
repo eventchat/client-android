@@ -32,8 +32,9 @@ public final class EntityFactory {
 
     public static Post createPost(String id, String title, String type,
             String body, String createdAt, User author,
-            List<Comment> commentList) {
-        return new Post(id, title, type, body, createdAt, author, commentList);
+            List<Comment> commentList, List<User> likedUserList) {
+        return new Post(id, title, type, body, createdAt, author, commentList,
+                likedUserList);
     }
 
     public static ChatMessage createChatMessage(User from, User to,

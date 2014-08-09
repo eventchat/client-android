@@ -101,7 +101,8 @@ public final class JsonParser {
                     .getString(Constant.Common.CREATED_AT), parseUser(object
                     .getString(Constant.Common.AUTHOR)),
                     parseCommentList(object
-                            .getString(Constant.Comment.COMMENTS)));
+                            .getString(Constant.Comment.COMMENTS)),
+                    parseUserList(object.getString(Constant.Like.LIKE)));
         } catch (JSONException e) {
             e.printStackTrace();
         }

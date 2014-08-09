@@ -144,7 +144,7 @@ public class EventActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-                if (position < Math.min(7, userList.size()) - 1) {
+                if (position < Math.min(7, userList.size())) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(Constant.Data.PROFILE_DATA,
                             userList.get(position));

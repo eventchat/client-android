@@ -46,6 +46,11 @@ public interface Constant {
         static final String TYPE = "type";
     }
 
+    // Key for like
+    public interface Like {
+        static final String LIKE = "liked_by";
+    }
+
     // Key for comment
     // The same as common keys
     public interface Comment {
