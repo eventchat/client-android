@@ -83,8 +83,9 @@ public final class ChatManager implements IDispose {
 
     public List<ChatMessage> getConversationList() {
         List<ChatMessage> conversationList = new ArrayList<ChatMessage>();
-        for (Map.Entry<String, List<ChatMessage>> entry : mChatMap.entrySet()) {
-            List<ChatMessage> list = entry.getValue();
+        for (String key : mChatMap.keySet()) {
+            List<ChatMessage> list = mChatMap.get(key);
+            DebugLog.d(TAG, "target user id = " + key);
             if (list.size() > 0) {
                 conversationList.add(list.get(list.size() - 1));
             }

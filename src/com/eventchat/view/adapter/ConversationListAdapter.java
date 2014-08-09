@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.eventchat.R;
 import com.eventchat.entity.ChatMessage;
+import com.eventchat.manager.ProfileManager;
 
 public class ConversationListAdapter extends BaseAdapter {
 
@@ -53,8 +54,12 @@ public class ConversationListAdapter extends BaseAdapter {
         TextView time = (TextView) convertView.findViewById(R.id.time);
         TextView content = (TextView) convertView.findViewById(R.id.content);
         ChatMessage message = mConversationList.get(position);
-        name.setText(message.getFrom().getName());
 
+        if (!ProfileManager.getInstance(mContext).isMyself(message.getFrom())) {
+            name.setText(message.getFrom().getName());
+        } else {
+            name.setText(message.getTo().getName());
+        }
         DateFormat format = new SimpleDateFormat(
                 "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
         Date date = null;

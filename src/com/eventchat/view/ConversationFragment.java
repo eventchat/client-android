@@ -64,14 +64,14 @@ public class ConversationFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
-        ChatManager.getInstance().getChatMessage(mHandler);
+
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateConversationList(ChatManager.getInstance().getConversationList());
+        ChatManager.getInstance().getChatMessage(mHandler);
     }
 
     @Override

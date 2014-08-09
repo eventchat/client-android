@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -93,12 +96,36 @@ public class ChatActivity extends Activity {
                             nowAsISO);
                     ChatManager.getInstance().putChatMessage(
                             mTargetUser.getId(), chat);
-                    mChatList.add(chat);
+                    mChatList.clear();
+                    mChatList.addAll(ChatManager.getInstance()
+                            .getChatMessageListByUser(mTargetUser));
                     mChatListAdapter.notifyDataSetChanged();
+                    mMessageText.setText("");
+                    hideKeyboard();
                 }
             }
         });
 
+        mMessageText.setOnFocusChangeListener(new OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard();
+                }
+            }
+        });
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mMessageText.getWindowToken(), 0);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private void updateChatMessageList() {

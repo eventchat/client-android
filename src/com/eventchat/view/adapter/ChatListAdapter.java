@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,11 +55,18 @@ public class ChatListAdapter extends BaseAdapter {
         LinearLayout layout = (LinearLayout) convertView;
         TextView message = (TextView) convertView.findViewById(R.id.message);
         ChatMessage chat = mChatList.get(position);
+        ImageView destAvatar = (ImageView) convertView.findViewById(R.id.dest);
+        ImageView sourceAvatar = (ImageView) convertView
+                .findViewById(R.id.source);
         if (!isMyself(chat.getFrom().getId())) {
             layout.setGravity(Gravity.LEFT);
+            destAvatar.setVisibility(View.VISIBLE);
+            sourceAvatar.setVisibility(View.GONE);
             message.setBackgroundResource(R.drawable.bubble_yellow);
         } else {
             layout.setGravity(Gravity.RIGHT);
+            sourceAvatar.setVisibility(View.VISIBLE);
+            destAvatar.setVisibility(View.GONE);
             message.setBackgroundResource(R.drawable.bubble_green);
         }
         message.setText(chat.getMessage());
