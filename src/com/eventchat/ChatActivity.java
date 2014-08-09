@@ -9,8 +9,10 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,6 +46,8 @@ public class ChatActivity extends Activity {
     private ChatListAdapter mChatListAdapter = null;
 
     private User mTargetUser = null;
+
+    private BroadcastReceiver mReceiver = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +119,10 @@ public class ChatActivity extends Activity {
                 }
             }
         });
+        ChatHandler handler = new ChatHandler(getMainLooper());
+        handler.sendEmptyMessageDelayed(0, 1000);
+        registerReceiver(mReceiver = new IntentBroadcastReceiver(),
+                new IntentFilter(Intent.ACTION_VIEW));
     }
 
     private void hideKeyboard() {
@@ -125,11 +133,28 @@ public class ChatActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        unregisterReceiver(mReceiver);
         finish();
     }
 
-    private void updateChatMessageList() {
+    public static final String UPDATE_CHAT_MESSAGE_ACTION = "update_chat_message_list";
 
+    private class IntentBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(UPDATE_CHAT_MESSAGE_ACTION)) {
+
+            }
+            updateChatMessageList();
+        }
+    }
+
+    public void updateChatMessageList() {
+        mChatList.clear();
+        mChatList.addAll(ChatManager.getInstance().getChatMessageListByUser(
+                mTargetUser));
+        mChatListAdapter.notifyDataSetChanged();
     }
 
     private class ChatHandler extends Handler {
@@ -141,6 +166,8 @@ public class ChatActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            updateChatMessageList();
+            sendEmptyMessageDelayed(0, 10000);
         }
     }
 }

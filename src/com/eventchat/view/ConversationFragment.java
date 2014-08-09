@@ -86,6 +86,10 @@ public class ConversationFragment extends Fragment {
         mConversationList.clear();
         mConversationList.addAll(manager.getConversationList());
         mAdapter.notifyDataSetChanged();
+
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        intent.setAction(Intent.ACTION_VIEW);
+        getActivity().sendBroadcast(intent);
     }
 
     private class ConversationHandler extends Handler {

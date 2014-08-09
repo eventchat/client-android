@@ -38,7 +38,6 @@ public final class ChatManager implements IDispose {
     }
 
     public static ChatManager getInstance() {
-        DebugLog.d(TAG, "getInstance");
         return sInstance;
     }
 
