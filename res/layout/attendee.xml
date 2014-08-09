@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="vertical" >
 
-    <ImageView
+    <com.eventchat.view.RoundedImageView
         android:id="@+id/avatar"
         android:layout_width="32dp"
         android:layout_height="32dp"

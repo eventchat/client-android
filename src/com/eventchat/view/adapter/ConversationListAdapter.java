@@ -1,9 +1,11 @@
 package com.eventchat.view.adapter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
-import com.eventchat.R;
-import com.eventchat.entity.ChatMessage;
+import java.util.Locale;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.eventchat.R;
+import com.eventchat.entity.ChatMessage;
 
 public class ConversationListAdapter extends BaseAdapter {
 
@@ -49,7 +54,17 @@ public class ConversationListAdapter extends BaseAdapter {
         TextView content = (TextView) convertView.findViewById(R.id.content);
         ChatMessage message = mConversationList.get(position);
         name.setText(message.getFrom().getName());
-        time.setText(message.getCreatedTime());
+
+        DateFormat format = new SimpleDateFormat(
+                "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+        Date date = null;
+        try {
+            date = format.parse(message.getCreatedTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        time.setText(format.format(date));
         content.setText(message.getMessage());
         return convertView;
     }

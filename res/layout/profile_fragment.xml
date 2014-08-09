@@ -12,7 +12,7 @@
         android:gravity="center"
         android:orientation="vertical" >
 
-        <ImageView
+        <com.eventchat.view.RoundedImageView
             android:id="@+id/avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -33,7 +33,11 @@
     <ListView
         android:id="@+id/post_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:cacheColorHint="@android:color/transparent"
+        android:clickable="false"
+        android:listSelector="@android:color/transparent"
+        android:stackFromBottom="true" />
 
     <!--
     <android.support.v4.view.ViewPager

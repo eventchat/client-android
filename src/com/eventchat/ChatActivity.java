@@ -1,7 +1,12 @@
 package com.eventchat;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -51,6 +56,8 @@ public class ChatActivity extends Activity {
         Bundle bundle = intent.getExtras();
         mTargetUser = (User) bundle.getSerializable(Constant.Data.CHAT_DATA);
 
+        getActionBar().setTitle(mTargetUser.getName());
+
         mChatList = new ArrayList<ChatMessage>();
         List<ChatMessage> list = ChatManager.getInstance()
                 .getChatMessageListByUser(mTargetUser);
@@ -68,15 +75,22 @@ public class ChatActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                if (mMessageText != null) {
+                if (mMessageText != null && mMessageText.getText().length() > 0) {
                     String message = mMessageText.getText().toString();
                     ChatManager.getInstance().sendChatMessage(
                             mTargetUser.getId(), message,
                             new ChatHandler(getMainLooper()));
+
+                    TimeZone tz = TimeZone.getTimeZone("UTC");
+                    DateFormat df = new SimpleDateFormat(
+                            "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
+                    df.setTimeZone(tz);
+                    String nowAsISO = df.format(new Date());
+
                     ChatMessage chat = EntityFactory.createChatMessage(
                             ProfileManager.getInstance(ChatActivity.this)
                                     .getCurrentUser(), mTargetUser, message,
-                            null);
+                            nowAsISO);
                     ChatManager.getInstance().putChatMessage(
                             mTargetUser.getId(), chat);
                     mChatList.add(chat);

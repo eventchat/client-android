@@ -8,12 +8,13 @@
         android:id="@+id/chat_all"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="center"
         android:layout_marginLeft="20dp"
         android:drawableLeft="@drawable/ico_chat_orange"
-        android:gravity="center"
+        android:drawablePadding="20dp"
+        android:enabled="false"
+        android:gravity="center_vertical"
         android:text="@string/chat_all"
-        android:textSize="24sp" >
+        android:textSize="18sp" >
     </TextView>
 
     <ListView

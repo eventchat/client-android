@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.eventchat.TabFragment" >
 
-    <ImageView
+    <com.eventchat.view.RoundedImageView
         android:id="@+id/avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
